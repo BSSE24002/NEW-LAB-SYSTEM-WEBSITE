@@ -209,16 +209,12 @@ export function Home() {
       <div className="bg-white border-y border-gray-200 mt-12 md:mt-16 py-12 overflow-hidden">
         <h2 className="text-center text-xl font-bold text-gray-800 mb-8 uppercase tracking-wide">Official Partners & Brands</h2>
         <div className="relative w-full flex" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
-          <motion.div 
-            animate={{ x: ["0%", "-50%"] }} 
-            transition={{ repeat: Infinity, ease: "linear", duration: 20 }} 
-            className="flex whitespace-nowrap gap-16 md:gap-24 items-center w-max px-8"
-          >
+          <div className="flex whitespace-nowrap gap-16 md:gap-24 items-center w-max px-8 animate-marquee">
             {/* Repeat the brands array twice to create an infinite loop effect */}
             {[...Array(2)].map((_, i) => (
               <React.Fragment key={i}>
                 {BRANDS.map((brand, idx) => (
-                  <div key={`${i}-${idx}`} className="h-10 md:h-14 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
+                  <div key={`${i}-${idx}`} className="h-10 md:h-14 flex items-center justify-center transition-all duration-300">
                     {brand.img.includes('http') ? (
                       <img src={brand.img} alt={brand.name} className="max-h-full max-w-[140px] md:max-w-[180px] object-contain" />
                     ) : (
@@ -228,7 +224,7 @@ export function Home() {
                 ))}
               </React.Fragment>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
 

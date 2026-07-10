@@ -59,16 +59,24 @@ ${rawText}
   }
 }
 
-export async function chatWithAssistant(userMessages) {
+export async function chatWithAssistant(userMessages, inventory = []) {
   const apiKey = import.meta.env.VITE_GROQ_API_KEY;
   
   if (!apiKey) {
     throw new Error("VITE_GROQ_API_KEY is not set.");
   }
 
+  const inventoryString = inventory.map(p => `ID: ${p.id} | Name: ${p.name} | Category: ${p.category} | Price: ${p.price}`).join('\n');
+
   const systemMessage = {
     role: "system",
-    content: "You are an AI sales assistant for Al Fatah Lab Systems. Your job is to help users find laboratory products (pH meters, titrators, etc.) based on their needs. Act as a filter and suggest product categories or specific tools. If they feel difficulty, guide them gently. DO NOT answer irrelevant questions outside of lab equipment, science, or site navigation. Keep your answers concise, professional, and helpful."
+    content: `You are "New Lab System's assistant", an AI sales assistant. Your job is to help users find laboratory products. Act as a filter and suggest product categories or specific tools. If they feel difficulty, guide them gently. DO NOT answer irrelevant questions outside of lab equipment, science, or site navigation. Keep your answers concise, professional, and helpful.
+
+Here is the current database of products we sell:
+${inventoryString}
+
+IMPORTANT INSTRUCTION:
+If you want to recommend a specific product to the customer, you MUST output the exact string [PRODUCT:id] where "id" is the ID of the product from the list above. For example, if the user asks for a pH meter and its ID is 10, say: "I highly recommend this one: [PRODUCT:10]". DO NOT use markdown links for products.`
   };
 
   try {
@@ -82,7 +90,7 @@ export async function chatWithAssistant(userMessages) {
         model: "llama-3.3-70b-versatile",
         messages: [systemMessage, ...userMessages],
         temperature: 0.5,
-        max_tokens: 250
+        max_tokens: 300
       })
     });
 
