@@ -137,8 +137,7 @@ export function Header() {
 
           {/* Center section: Logo */}
           <Link to="/" className="flex flex-col items-center justify-center shrink-0">
-            <img src="/logo1.png" alt="Logo" className="h-10 w-auto mb-1" />
-            <span className="text-[10px] font-black tracking-[0.3em] uppercase text-blue-600 leading-none">Instruments</span>
+            <img src="/logo1.png" alt="Logo" className="h-15 w-auto mb-1" />
           </Link>
 
           {/* Right section: Actions */}
