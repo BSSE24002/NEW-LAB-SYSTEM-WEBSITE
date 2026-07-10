@@ -15,6 +15,7 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
   const [discounts, setDiscounts] = useState([]);
+  const [products, setProducts] = useState([]);
   const { items, setIsCartOpen } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,9 +37,10 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    // Fetch data for mega menu
+    // Fetch data for mega menu and search
     api.getCategories().then((data) => setCategories(data)).catch(() => {});
     api.getDiscounts().then((data) => setDiscounts(data.filter(d => d.active))).catch(() => {});
+    api.getProducts().then((data) => setProducts(data)).catch(() => {});
   }, []);
 
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
@@ -62,6 +64,13 @@ export function Header() {
       setSearchQuery("");
     }
   };
+
+  const liveSearchResults = searchQuery.trim().length > 1
+    ? products.filter(p => 
+        p.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        p.sku?.toLowerCase().includes(searchQuery.toLowerCase())
+      ).slice(0, 4)
+    : [];
 
   return (
     <>
@@ -235,33 +244,72 @@ export function Header() {
       <AnimatePresence>
         {isSearchOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed top-0 left-0 w-full h-[300px] bg-brand-pure-white text-brand-obsidian shadow-2xl z-50 p-6 md:p-12 flex flex-col items-center justify-center border-b border-gray-100"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-xl z-[100] flex flex-col items-center pt-24 md:pt-40 px-4"
           >
             <div className="w-full max-w-3xl relative">
-              <form onSubmit={handleSearchSubmit}>
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" />
+              <form onSubmit={handleSearchSubmit} className="relative z-10">
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-8 h-8 text-white/50" />
                 <input
                   type="text"
                   autoFocus
-                  placeholder="SEARCH FOR ITEMS..."
+                  placeholder="SEARCH COLLECTION..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-gray-50 border-none outline-none py-6 pl-14 pr-24 text-xl md:text-3xl font-black uppercase tracking-widest placeholder:text-gray-300 focus:bg-gray-100 transition-colors"
+                  className="w-full bg-transparent border-b-2 border-white/20 outline-none py-6 pl-20 pr-24 text-2xl md:text-5xl font-sans font-black uppercase tracking-tighter text-white placeholder:text-white/20 focus:border-white transition-colors"
                 />
                 <button 
                   type="button" 
                   onClick={() => setIsSearchOpen(false)} 
-                  className="absolute right-6 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-brand-obsidian transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-[0.2em] text-white/50 hover:text-white transition-colors p-2"
                 >
                   Close
                 </button>
               </form>
+
+              {/* Live Search Results */}
+              <AnimatePresence>
+                {liveSearchResults.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"
+                  >
+                    {liveSearchResults.map(product => (
+                      <Link 
+                        key={product.id} 
+                        to={`/product/${product.id}`}
+                        onClick={() => setIsSearchOpen(false)}
+                        className="group flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 transition-colors"
+                      >
+                        <div className="w-20 h-24 bg-white/5 rounded-lg overflow-hidden shrink-0">
+                          {product.image_url ? (
+                            <img src={product.image_url} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          ) : (
+                            <div className="w-full h-full bg-white/10" />
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-1 line-clamp-1">{product.name}</h4>
+                          <p className="text-white/50 text-xs font-mono font-medium">PKR {product.price}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {searchQuery.trim().length > 1 && liveSearchResults.length === 0 && (
+                <div className="mt-12 text-center text-white/40 uppercase tracking-widest text-xs font-bold">
+                  No products found for "{searchQuery}"
+                </div>
+              )}
             </div>
-            <p className="mt-8 text-xs font-medium text-gray-400 tracking-widest uppercase">
-              Press Enter to search
+            <p className="mt-auto mb-10 text-xs font-medium text-white/30 tracking-[0.3em] uppercase">
+              Press Enter to view all results
             </p>
           </motion.div>
         )}
