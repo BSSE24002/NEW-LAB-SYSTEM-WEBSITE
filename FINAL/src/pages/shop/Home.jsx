@@ -1,288 +1,275 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "motion/react";
-import { ScrollReveal } from "../../components/shop/ScrollReveal";
 import { ProductCard } from "../../components/shop/ProductCard";
 import { api } from "../../services/api";
-import { Loader2, ArrowRight, Activity, Cpu, Database, ShieldCheck } from "lucide-react";
+import { ChevronLeft, ChevronRight, Truck, ShieldCheck, HeadphonesIcon, CreditCard, ArrowRight } from "lucide-react";
+
+const HERO_SLIDES = [
+  {
+    image: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=2000&auto=format&fit=crop",
+    subtitle: "NEW GENERATION",
+    title: "Advanced Titration Systems",
+    description: "Experience unparalleled accuracy with our latest automated titrators.",
+    buttonText: "Shop Now",
+    buttonLink: "/catalog?category=Titration"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=2000&auto=format&fit=crop",
+    subtitle: "PRECISION OPTICS",
+    title: "Clinical Microscopes",
+    description: "Crystal clear resolution for your most demanding diagnostic needs.",
+    buttonText: "Discover More",
+    buttonLink: "/catalog?category=Microscopy"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2000&auto=format&fit=crop",
+    subtitle: "PROMOTION",
+    title: "Free Calibration",
+    description: "Get 1-year free factory calibration on all Spectrometers purchased this month.",
+    buttonText: "View Offer",
+    buttonLink: "/catalog?category=Spectrometry"
+  }
+];
+
+const CATEGORIES = [
+  { name: "Spectrometers", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop" },
+  { name: "Microscopes", image: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=800&auto=format&fit=crop" },
+  { name: "Centrifuges", image: "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=800&auto=format&fit=crop" },
+  { name: "Chromatographs", image: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop" },
+  { name: "Balances & Scales", image: "https://images.unsplash.com/photo-1581093806997-124204d9fa9d?q=80&w=800&auto=format&fit=crop" },
+  { name: "Incubators", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop" }
+];
+
+const INDUSTRIES = [
+  { name: "Pharmaceuticals", image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=600&auto=format&fit=crop" },
+  { name: "Water Treatment", image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=600&auto=format&fit=crop" },
+  { name: "Food & Beverage", image: "https://images.unsplash.com/photo-1556767576-5ec41e3239ea?q=80&w=600&auto=format&fit=crop" },
+  { name: "Clinical Diagnostics", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=600&auto=format&fit=crop" }
+];
 
 export function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [loadingFeatured, setLoadingFeatured] = useState(true);
-  const [activeTab, setActiveTab] = useState(0);
+  const [loading, setLoading] = useState(true);
 
+  // Auto-play slider
   useEffect(() => {
-    api
-      .getProducts()
-      .then((data) => setFeaturedProducts(data.slice(0, 4)))
-      .catch(() => setFeaturedProducts([]))
-      .finally(() => setLoadingFeatured(false));
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
   }, []);
 
-  const TABS = [
-    {
-      title: "Spectrometry",
-      desc: "High-resolution mass and optical spectrometry systems engineered for precise molecular analysis at the nanogram level.",
-      img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop",
-      specs: ["Mass Range: 10-2000 m/z", "Resolution: >100,000", "Scan Rate: 50 Hz"]
-    },
-    {
-      title: "Microscopy",
-      desc: "Advanced scanning electron and confocal microscopes offering unprecedented clarity and sub-nanometer resolution.",
-      img: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=1600&auto=format&fit=crop",
-      specs: ["Resolution: 0.8nm", "Magnification: 1,000,000x", "Detector: In-lens SE"]
-    },
-    {
-      title: "Chromatography",
-      desc: "Automated gas and liquid chromatography platforms designed for rapid, high-throughput volatile compound separation.",
-      img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1600&auto=format&fit=crop",
-      specs: ["Pressure: up to 15,000 psi", "Flow Rate: 0.001 - 10 mL/min", "Oven Temp: 450°C"]
-    }
-  ];
+  useEffect(() => {
+    api.getProducts().then((data) => {
+      setFeaturedProducts(data.slice(0, 8));
+    }).catch(() => {
+      setFeaturedProducts([]);
+    }).finally(() => {
+      setLoading(false);
+    });
+  }, []);
+
+  const nextSlide = () => setCurrentSlide((p) => (p + 1) % HERO_SLIDES.length);
+  const prevSlide = () => setCurrentSlide((p) => (p - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
 
   return (
-    <div className="bg-brand-pure-white text-brand-obsidian font-sans">
+    <div className="bg-white text-gray-900 font-sans">
       
-      {/* 1. Split-Screen Hero */}
-      <section className="relative min-h-[100svh] flex flex-col lg:flex-row pt-20">
-        <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 lg:px-20 py-20 z-10 bg-brand-pure-white">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-8 h-[2px] bg-brand-obsidian"></span>
-              <span className="text-xs uppercase tracking-widest font-bold text-brand-obsidian/70">New Lab System</span>
-            </div>
-            <h1 className="text-[4rem] lg:text-[6rem] leading-[0.9] font-black uppercase tracking-tighter mb-8 text-brand-obsidian">
-              Next-Gen<br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-400">Analytics.</span>
-            </h1>
-            <p className="text-lg text-brand-obsidian/70 font-medium max-w-md leading-relaxed mb-12">
-              Equip your laboratory with industry-leading precision instruments. Engineered for automated workflows, robust compliance, and absolute data integrity.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/catalog" className="flex items-center justify-center gap-2 px-8 py-4 bg-brand-obsidian text-white uppercase text-xs font-bold tracking-widest hover:bg-blue-600 transition-colors">
-                Explore Catalog <ArrowRight className="w-4 h-4" />
+      {/* 1. Full-Width Hero Slider */}
+      <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden group">
+        {HERO_SLIDES.map((slide, index) => (
+          <div 
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+          >
+            <div className="absolute inset-0 bg-black/40 z-10" />
+            <img src={slide.image} alt={slide.title} className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6">
+              <span className="text-white tracking-[0.3em] text-sm md:text-base font-semibold mb-4 drop-shadow-md">
+                {slide.subtitle}
+              </span>
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 drop-shadow-lg">
+                {slide.title}
+              </h2>
+              <p className="text-white/90 text-lg md:text-xl max-w-2xl mb-8 drop-shadow-md">
+                {slide.description}
+              </p>
+              <Link 
+                to={slide.buttonLink} 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 uppercase tracking-widest text-sm font-bold transition-colors shadow-lg"
+              >
+                {slide.buttonText}
               </Link>
-              <Link to="/contact" className="flex items-center justify-center px-8 py-4 bg-transparent border border-brand-obsidian text-brand-obsidian uppercase text-xs font-bold tracking-widest hover:bg-brand-alabaster transition-colors">
-                Request Demo
-              </Link>
             </div>
-          </motion.div>
-        </div>
-        <div className="w-full lg:w-1/2 relative h-[50vh] lg:h-auto overflow-hidden bg-brand-obsidian">
-          <motion.img 
-            initial={{ scale: 1.1, opacity: 0 }} 
-            animate={{ scale: 1, opacity: 0.8 }} 
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=1600&auto=format&fit=crop" 
-            alt="Hero Instrument" 
-            className="absolute inset-0 w-full h-full object-cover mix-blend-luminosity opacity-80"
-          />
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-brand-pure-white/20 lg:hidden" />
-        </div>
-      </section>
-
-      {/* 2. Industries Served Marquee */}
-      <section className="bg-brand-alabaster py-6 border-y border-brand-obsidian/10 overflow-hidden flex">
-        <motion.div 
-          animate={{ x: ["0%", "-50%"] }} 
-          transition={{ repeat: Infinity, ease: "linear", duration: 30 }} 
-          className="flex whitespace-nowrap gap-16 text-brand-obsidian/40 text-sm font-bold uppercase tracking-[0.3em] w-max"
-        >
-          {Array(8).fill(null).map((_, i) => (
-            <React.Fragment key={i}>
-              <span>Pharmaceuticals</span>
-              <span>•</span>
-              <span>Biotechnology</span>
-              <span>•</span>
-              <span>Material Science</span>
-              <span>•</span>
-              <span>Clinical Diagnostics</span>
-              <span>•</span>
-            </React.Fragment>
+          </div>
+        ))}
+        
+        {/* Slider Controls */}
+        <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 hover:bg-white text-white hover:text-blue-600 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 hidden md:block">
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 hover:bg-white text-white hover:text-blue-600 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 hidden md:block">
+          <ChevronRight className="w-6 h-6" />
+        </button>
+        
+        {/* Slider Indicators */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+          {HERO_SLIDES.map((_, idx) => (
+            <button 
+              key={idx} 
+              onClick={() => setCurrentSlide(idx)}
+              className={`w-3 h-3 rounded-full transition-all ${idx === currentSlide ? 'bg-blue-600 w-8' : 'bg-white/50 hover:bg-white'}`}
+            />
           ))}
-        </motion.div>
+        </div>
       </section>
 
-      {/* 3. Technical Capabilities (Tabbed Interface) */}
-      <section className="py-32 max-w-[1400px] mx-auto px-6 lg:px-12">
-        <ScrollReveal>
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <div>
-              <h2 className="text-[2.5rem] md:text-[4rem] font-black uppercase tracking-tighter leading-none mb-4">Core Capabilities.</h2>
-              <p className="text-brand-obsidian/60 max-w-lg font-medium">Discover our specialized product lines designed to meet the rigorous demands of modern analytical science.</p>
+      {/* 2. USP / Brand Trust Bar */}
+      <section className="bg-gray-100 border-b border-gray-200">
+        <div className="max-w-[1400px] mx-auto px-4 py-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center divide-x divide-gray-300">
+            <div className="flex flex-col items-center justify-center gap-2 px-4">
+              <ShieldCheck className="w-6 h-6 text-blue-600" />
+              <span className="text-xs font-bold uppercase tracking-wide text-gray-700">100% Authentic</span>
+              <span className="text-[10px] text-gray-500 hidden md:block">Certified lab instruments</span>
             </div>
-            <div className="flex gap-4 border-b border-brand-obsidian/10 w-full md:w-auto">
-              {TABS.map((tab, idx) => (
-                <button 
-                  key={idx}
-                  onClick={() => setActiveTab(idx)}
-                  className={`pb-4 text-xs font-bold uppercase tracking-widest transition-colors relative ${activeTab === idx ? 'text-brand-obsidian' : 'text-brand-obsidian/40 hover:text-brand-obsidian/70'}`}
-                >
-                  {tab.title}
-                  {activeTab === idx && (
-                    <motion.div layoutId="tab-indicator" className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-600" />
-                  )}
-                </button>
-              ))}
+            <div className="flex flex-col items-center justify-center gap-2 px-4">
+              <Truck className="w-6 h-6 text-blue-600" />
+              <span className="text-xs font-bold uppercase tracking-wide text-gray-700">Nationwide Delivery</span>
+              <span className="text-[10px] text-gray-500 hidden md:block">Secure & insured shipping</span>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-2 px-4">
+              <CreditCard className="w-6 h-6 text-blue-600" />
+              <span className="text-xs font-bold uppercase tracking-wide text-gray-700">Bank Transfer Only</span>
+              <span className="text-[10px] text-gray-500 hidden md:block">Secure corporate payments</span>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-2 px-4">
+              <HeadphonesIcon className="w-6 h-6 text-blue-600" />
+              <span className="text-xs font-bold uppercase tracking-wide text-gray-700">Expert Support</span>
+              <span className="text-[10px] text-gray-500 hidden md:block">24/7 technical assistance</span>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
+      </section>
 
-        <div className="bg-brand-alabaster rounded-3xl overflow-hidden min-h-[500px] flex flex-col md:flex-row relative">
-          <AnimatePresence mode="wait">
-            <motion.div 
-              key={activeTab}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.3 }}
-              className="w-full md:w-1/2 p-12 lg:p-20 flex flex-col justify-center"
-            >
-              <h3 className="text-3xl font-black uppercase tracking-tight mb-6">{TABS[activeTab].title}</h3>
-              <p className="text-brand-obsidian/70 leading-relaxed mb-10">{TABS[activeTab].desc}</p>
-              <div className="space-y-4 mb-10">
-                {TABS[activeTab].specs.map((spec, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <ShieldCheck className="w-5 h-5 text-blue-600" />
-                    <span className="text-sm font-bold tracking-widest uppercase">{spec}</span>
-                  </div>
-                ))}
+      {/* 3. Shop by Category Grid */}
+      <section className="py-16 md:py-24 max-w-[1400px] mx-auto px-4 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-gray-900 mb-3">Shop by Category</h2>
+          <div className="w-16 h-1 bg-blue-600 mx-auto"></div>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          {CATEGORIES.map((cat, idx) => (
+            <Link to={`/catalog?category=${cat.name}`} key={idx} className="group relative overflow-hidden block aspect-[4/3] bg-gray-200">
+              <img 
+                src={cat.image} 
+                alt={cat.name} 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-white/95 backdrop-blur px-6 py-3 min-w-[70%] text-center transform transition-transform group-hover:-translate-y-2">
+                  <h3 className="text-sm md:text-base font-bold uppercase tracking-wider text-gray-900">{cat.name}</h3>
+                </div>
               </div>
-              <Link to={`/catalog?category=${TABS[activeTab].title}`} className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">
-                View Instruments <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="w-full md:w-1/2 relative h-[300px] md:h-auto overflow-hidden">
-             <AnimatePresence mode="wait">
-               <motion.img 
-                  key={activeTab}
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  src={TABS[activeTab].img}
-                  className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-90"
-               />
-             </AnimatePresence>
-          </div>
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* 4. "Inside the Engineering" Feature */}
-      <section className="bg-brand-obsidian text-brand-pure-white py-32 relative overflow-hidden">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-           <ScrollReveal>
-             <div className="text-center mb-20">
-               <h2 className="text-[3rem] md:text-[5rem] font-black uppercase tracking-tighter leading-none mb-6">Engineered for<br/>Absolute Certainty.</h2>
-               <p className="text-brand-soft-grey max-w-2xl mx-auto text-lg">Every instrument is constructed with industrial-grade materials and integrated with smart telemetry for real-time performance monitoring.</p>
-             </div>
-           </ScrollReveal>
-           
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center mt-12">
-             <ScrollReveal>
-               <div className="flex flex-col items-center">
-                 <div className="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center mb-6">
-                   <Activity className="w-8 h-8 text-blue-400" />
-                 </div>
-                 <h4 className="text-xl font-bold uppercase tracking-widest mb-4">High Sensitivity</h4>
-                 <p className="text-brand-soft-grey/80 text-sm leading-relaxed">Achieve sub-part-per-trillion detection limits with our proprietary signal enhancement technology.</p>
-               </div>
-             </ScrollReveal>
-             <ScrollReveal>
-               <div className="flex flex-col items-center">
-                 <div className="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center mb-6">
-                   <Cpu className="w-8 h-8 text-blue-400" />
-                 </div>
-                 <h4 className="text-xl font-bold uppercase tracking-widest mb-4">Automated Workflows</h4>
-                 <p className="text-brand-soft-grey/80 text-sm leading-relaxed">Reduce manual errors with robotic sample handling and AI-driven predictive maintenance.</p>
-               </div>
-             </ScrollReveal>
-             <ScrollReveal>
-               <div className="flex flex-col items-center">
-                 <div className="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center mb-6">
-                   <Database className="w-8 h-8 text-blue-400" />
-                 </div>
-                 <h4 className="text-xl font-bold uppercase tracking-widest mb-4">Data Integrity</h4>
-                 <p className="text-brand-soft-grey/80 text-sm leading-relaxed">Built-in 21 CFR Part 11 compliance with encrypted audit trails and secure cloud backups.</p>
-               </div>
-             </ScrollReveal>
-           </div>
-        </div>
-      </section>
-
-      {/* 5. Featured Instruments Grid */}
-      <section className="py-32 max-w-[1400px] mx-auto px-6 lg:px-12">
-        <ScrollReveal>
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+      {/* 4. Best Sellers Scroller */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+          <div className="flex justify-between items-end mb-12">
             <div>
-              <h2 className="text-[2.5rem] md:text-[4rem] font-black uppercase tracking-tighter leading-none mb-4">Featured Systems.</h2>
-              <p className="text-brand-obsidian/60 max-w-lg font-medium">Explore our flagship analytical instruments currently leading the industry in precision.</p>
+              <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-gray-900 mb-3">Best Sellers</h2>
+              <div className="w-16 h-1 bg-blue-600"></div>
             </div>
-            <Link to="/catalog" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-brand-obsidian pb-1 hover:text-blue-600 hover:border-blue-600 transition-colors">
-              View Entire Catalog <ArrowRight className="w-4 h-4" />
+            <Link to="/catalog" className="hidden md:flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-widest">
+              View All <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-        </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {loadingFeatured ? (
-            <div className="col-span-4 flex items-center justify-center py-20 text-brand-obsidian/30 gap-3">
-              <Loader2 className="w-6 h-6 animate-spin" />
-              <span className="text-xs uppercase tracking-widest font-bold">Loading Systems...</span>
+          <div className="overflow-x-auto pb-8 hide-scrollbar">
+            <div className="flex gap-6 w-max">
+              {loading ? (
+                <div className="w-full flex items-center justify-center p-12 text-gray-400">Loading products...</div>
+              ) : featuredProducts.length > 0 ? (
+                featuredProducts.map(product => (
+                  <div key={product.id} className="w-[280px] md:w-[320px] flex-shrink-0">
+                    <ProductCard product={product} />
+                  </div>
+                ))
+              ) : (
+                <div className="w-full text-gray-400">No products found.</div>
+              )}
             </div>
-          ) : featuredProducts.length > 0 ? (
-            featuredProducts.map((p) => <ProductCard key={p.id} product={p} />)
-          ) : (
-            <div className="col-span-4 text-center py-20 text-brand-obsidian/30 text-xs uppercase tracking-widest font-bold">
-              No instruments available
-            </div>
-          )}
+          </div>
+          
+          <div className="mt-6 md:hidden flex justify-center">
+             <Link to="/catalog" className="inline-block border border-gray-900 px-8 py-3 text-sm font-bold uppercase tracking-widest hover:bg-gray-900 hover:text-white transition-colors">
+              View All Products
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* 6. Performance Metrics */}
-      <section className="py-24 bg-brand-alabaster border-y border-brand-obsidian/10">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-12 divide-y md:divide-y-0 md:divide-x divide-brand-obsidian/10">
-           <ScrollReveal>
-             <div className="flex flex-col items-center text-center pt-8 md:pt-0">
-               <span className="text-5xl font-black text-blue-600 mb-2">40%</span>
-               <span className="text-xs uppercase font-bold tracking-widest text-brand-obsidian/60 mb-2">Faster Throughput</span>
-               <p className="text-sm font-medium">Optimize your lab's operational efficiency.</p>
-             </div>
-           </ScrollReveal>
-           <ScrollReveal>
-             <div className="flex flex-col items-center text-center pt-8 md:pt-0">
-               <span className="text-5xl font-black text-blue-600 mb-2">&lt;0.01%</span>
-               <span className="text-xs uppercase font-bold tracking-widest text-brand-obsidian/60 mb-2">Error Rate</span>
-               <p className="text-sm font-medium">Unparalleled accuracy and reproducibility.</p>
-             </div>
-           </ScrollReveal>
-           <ScrollReveal>
-             <div className="flex flex-col items-center text-center pt-8 md:pt-0">
-               <span className="text-5xl font-black text-blue-600 mb-2">ISO</span>
-               <span className="text-xs uppercase font-bold tracking-widest text-brand-obsidian/60 mb-2">9001 Certified</span>
-               <p className="text-sm font-medium">Manufactured under rigorous quality controls.</p>
-             </div>
-           </ScrollReveal>
+      {/* 5. Promotional Banner */}
+      <section className="w-full bg-blue-600 text-white">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-16 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="md:w-2/3">
+            <span className="text-blue-200 text-sm font-bold uppercase tracking-widest mb-2 block">Enterprise Solutions</span>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">Need a custom laboratory setup?</h2>
+            <p className="text-blue-100 text-lg max-w-2xl">Our engineers provide end-to-end consulting, procurement, and installation for industrial and academic laboratories.</p>
+          </div>
+          <div className="md:w-1/3 flex justify-end w-full">
+             <Link to="/contact" className="w-full md:w-auto text-center bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 font-bold uppercase tracking-widest text-sm transition-colors shadow-lg">
+               Contact Sales Team
+             </Link>
+          </div>
         </div>
       </section>
 
-      {/* 7. Streamlined Final CTA */}
-      <section className="py-32 bg-brand-pure-white text-center px-6">
-        <ScrollReveal>
-          <h2 className="text-[3rem] md:text-[5rem] font-black uppercase tracking-tighter leading-none mb-8">Equip Your<br/>Laboratory Today.</h2>
-          <p className="text-brand-obsidian/60 font-medium max-w-xl mx-auto mb-12">Contact our technical sales team for custom configurations, pricing, and live demonstrations of our systems.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="px-10 py-5 bg-brand-obsidian text-white uppercase text-xs font-bold tracking-widest hover:bg-blue-600 transition-colors">
-              Consult an Expert
-            </Link>
-            <Link to="/catalog" className="px-10 py-5 bg-brand-alabaster border border-brand-obsidian/10 text-brand-obsidian uppercase text-xs font-bold tracking-widest hover:bg-gray-200 transition-colors">
-              Browse Systems
-            </Link>
-          </div>
-        </ScrollReveal>
+      {/* 6. Shop by Industry */}
+      <section className="py-16 md:py-24 max-w-[1400px] mx-auto px-4 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-gray-900 mb-3">Shop by Industry</h2>
+          <div className="w-16 h-1 bg-blue-600 mx-auto"></div>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {INDUSTRIES.map((industry, idx) => (
+            <div key={idx} className="group cursor-pointer relative overflow-hidden rounded-full aspect-square bg-gray-200">
+              <img 
+                src={industry.image} 
+                alt={industry.name} 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-blue-600/60 transition-colors" />
+              <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
+                <h3 className="text-white text-sm md:text-lg font-bold uppercase tracking-widest leading-snug drop-shadow-md">
+                  {industry.name}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. Newsletter / Footer Pre-CTA */}
+      <section className="border-t border-gray-200 bg-white py-16">
+        <div className="max-w-2xl mx-auto px-4 text-center">
+          <h2 className="text-2xl font-bold uppercase tracking-tight mb-4">Stay Informed</h2>
+          <p className="text-gray-600 mb-8">Subscribe to our newsletter for the latest instrument releases, technical webinars, and industry news.</p>
+          <form className="flex flex-col sm:flex-row gap-0 max-w-md mx-auto border border-gray-300" onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="Enter your email address" className="flex-1 p-3 focus:outline-none focus:bg-gray-50" />
+            <button className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 uppercase text-xs font-bold tracking-widest transition-colors">
+              Subscribe
+            </button>
+          </form>
+        </div>
       </section>
 
     </div>
