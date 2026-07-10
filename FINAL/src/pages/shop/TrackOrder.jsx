@@ -32,7 +32,7 @@ export function TrackOrder() {
               Track Order.
             </h1>
             <p className="text-xl font-medium text-brand-obsidian/60">
-              Enter your reference number below to monitor your<br className="hidden md:block" /> acquisition status in real-time.
+              Enter your order number below to monitor your<br className="hidden md:block" /> acquisition status in real-time.
             </p>
           </div>
 
@@ -58,7 +58,7 @@ export function TrackOrder() {
                 className="mt-12 pt-12 border-t border-black/10 flex flex-col gap-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <h4 className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase mb-2">Order Reference</h4>
+                    <h4 className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase mb-2">Order No.</h4>
                     <p className="font-mono text-2xl font-bold">{result.order_code || result.id}</p>
                   </div>
                   <div className="md:text-right">

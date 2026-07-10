@@ -36,7 +36,7 @@ export function OrderConfirmation() {
         </h1>
 
         <div className="bg-gray-50 border border-gray-200 p-6 mb-8 text-left mt-8">
-          <p className="text-xs uppercase tracking-widest text-gray-500 font-bold mb-2">Order Reference</p>
+          <p className="text-xs uppercase tracking-widest text-gray-500 font-bold mb-2">Order No.</p>
           <p className="font-mono text-xl text-brand-obsidian tracking-tight">{orderId}</p>
         </div>
 
