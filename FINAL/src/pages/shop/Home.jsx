@@ -1,263 +1,249 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../../services/api";
-import { motion } from "motion/react";
-import { ShieldCheck, Truck, HeadphonesIcon, Award, Users, ChevronRight, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { ShieldCheck, Truck, HeadphonesIcon, Award, Users, ChevronRight, ChevronLeft, ArrowRight, ShoppingCart } from "lucide-react";
 
 const CATEGORIES = [
-  { 
-    name: "Handheld Testers", 
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop",
-    desc: "Test like a pro on the go. Pocket-sized. Lightweight. Convenient. Start collecting consistent readings anywhere."
-  },
-  { 
-    name: "Portable Meters", 
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop",
-    desc: "Built for the lab or field. Durable. Reliable. Easy to use. Verify on the spot and test multiple parameters at once."
-  },
-  { 
-    name: "Benchtop Meters", 
-    image: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=800&auto=format&fit=crop",
-    desc: "Suited for many applications. Advanced. Versatile. Accurate. Surpass quality standards with our dependable Benchtop Meters."
-  },
-  { 
-    name: "Automatic Titrators", 
-    image: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=800&auto=format&fit=crop",
-    desc: "Get peace of mind and full support. Precise. Accurate. High-Performing. Attain exact, repeatable measurements."
-  }
+  { name: "Handheld Testers", image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=400&auto=format&fit=crop" },
+  { name: "Portable Meters", image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=400&auto=format&fit=crop" },
+  { name: "Benchtop Meters", image: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=400&auto=format&fit=crop" },
+  { name: "Automatic Titrators", image: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=400&auto=format&fit=crop" },
+  { name: "Electrodes", image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=400&auto=format&fit=crop" },
+  { name: "Reagents", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=400&auto=format&fit=crop" },
+  { name: "Accessories", image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=400&auto=format&fit=crop" }
 ];
 
 const BRANDS = [
-  { name: "HANNA instruments", img: "https://cdn2.hubspot.net/hubfs/2134380/Hanna-Logo-Blue-2023.png?width=140&height=44&name=Hanna-Logo-Blue-2023.png" },
+  { name: "HANNA", img: "https://cdn2.hubspot.net/hubfs/2134380/Hanna-Logo-Blue-2023.png?width=140&height=44&name=Hanna-Logo-Blue-2023.png" },
   { name: "WILLE55", img: "https://www.wile.fi/wp-content/themes/farmcomp/assets/wile-logo.svg" },
   { name: "GroLine", img: "https://www.groline.com/we/we.dll/Pic?UN=20747&F=C&T=801&Age=1512596728" },
-  { name: "Pyrex Glassware", img: "https://th.bing.com/th/id/R.2e2e428a261f26a09f88804dbb1c640a?rik=DS%2box%2fKVtyTdig&pid=ImgRaw&r=0" },
   { name: "Merck", img: "https://www.sigmaaldrich.com/static/logos/purple/merck.svg" },
   { name: "VWR", img: "https://occapi.avantorsciences.com/medias/vwr-part-of-avantor-logo.svg?context=bWFzdGVyfGltYWdlc3w1ODI1fGltYWdlL3N2Zyt4bWx8YUdWaEwyZzFaQzh4TURNNE16Z3hPVFUzTVRJek1DOTJkM0l0Y0dGeWRDMXZaaTFoZG1GdWRHOXlMV3h2WjI4dWMzWm58MTYzNTM4ZGQwNzhhZDQ4NjNjYTEzOWZkZTQzNWZhNGU4YTgzZTEyMGE3Y2Y3MGMzMjRkYWY4YjVhOWY3OTUxYg" }
 ];
 
-const INDUSTRIES = [
-  { name: "Food manufacturing", image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=600&auto=format&fit=crop" },
-  { name: "Laboratory analysis", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=600&auto=format&fit=crop" },
-  { name: "Industrial and metal finishing", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop" },
-  { name: "Water treatment and municipalities", image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=600&auto=format&fit=crop" }
-];
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
+const HERO_SLIDES = [
+  {
+    image: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=1600&auto=format&fit=crop",
+    title: "Precision Equipment for Professional Labs",
+    subtitle: "Up to 20% off on select Benchtop Meters",
+    color: "bg-blue-900/80"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1600&auto=format&fit=crop",
+    title: "New Arrivals: Portable Water Testing",
+    subtitle: "Shop the latest field instruments from top brands",
+    color: "bg-green-900/80"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=1600&auto=format&fit=crop",
+    title: "Automated Titration Systems",
+    subtitle: "Enhance accuracy and save time. Free setup included.",
+    color: "bg-slate-900/80"
   }
-};
+];
 
 export function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     api.getProducts().then((data) => {
-      // Show minimum 8 products as requested
-      setFeaturedProducts(data.slice(0, 8)); 
+      setFeaturedProducts(data.slice(0, 10)); // Load 10 products for a dense grid
     }).catch(console.error);
   }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1));
+
   return (
-    <div className="bg-white text-gray-900 font-sans min-h-screen">
+    <div className="bg-[#f0f2f5] text-gray-900 font-sans min-h-screen pb-10">
       
-      {/* 1. Ultra Premium Hero Section (Minimalist Retail Style) */}
-      <section className="relative w-full bg-black text-white overflow-hidden min-h-[85vh] flex flex-col items-center justify-center pt-24 pb-12">
-        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
-          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="w-full flex flex-col items-center">
-            
-            <motion.h1 variants={fadeInUp} className="text-5xl md:text-8xl font-bold mb-6 tracking-tight leading-[1.1]">
-              Precision.<br />Redefined.
-            </motion.h1>
-            
-            <motion.p variants={fadeInUp} className="text-lg md:text-2xl mb-10 text-gray-400 font-light max-w-2xl">
-              Uncompromising accuracy for the modern laboratory. Experience the next generation of analytical instruments.
-            </motion.p>
-            
-            <motion.div variants={fadeInUp} className="flex gap-4">
-              <Link 
-                to="/catalog" 
-                className="bg-white text-black px-8 py-4 rounded-full font-semibold text-sm hover:bg-gray-200 transition-colors"
-              >
-                Shop Now
-              </Link>
-              <Link 
-                to="/catalog?category=Benchtop Meters" 
-                className="bg-transparent border border-gray-600 text-white px-8 py-4 rounded-full font-semibold text-sm hover:bg-gray-800 transition-colors"
-              >
-                Learn More
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-        
-        <div className="relative z-10 w-full max-w-4xl mx-auto mt-16 px-6">
-            <motion.img 
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=1200&auto=format&fit=crop" 
-              alt="Professional Lab Equipment" 
-              className="w-full h-auto object-cover rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.8)]"
-            />
-        </div>
-      </section>
-
-      {/* 1.5 Featured Products (8 Products Grid) */}
-      <section className="bg-white py-32 border-b border-gray-100">
-        <motion.div 
-          initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer}
-          className="max-w-[1400px] mx-auto px-6 lg:px-12"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-            <div>
-              <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-bold text-black tracking-tight mb-4">Featured.</motion.h2>
-              <motion.p variants={fadeInUp} className="text-gray-500 text-xl">The standard in analytical excellence.</motion.p>
-            </div>
-            <motion.div variants={fadeInUp}>
-              <Link to="/catalog" className="text-black font-semibold text-sm hover:underline flex items-center gap-1 group">
-                View All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-          </div>
-          
-          {/* Changed to an 8 item grid with clean, flat aesthetics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-            {featuredProducts.length > 0 ? (
-              featuredProducts.map(product => (
-                <motion.div variants={fadeInUp} key={product.id} className="h-full">
-                  <Link to={`/product/${product.id}`} className="bg-gray-50/50 p-6 transition-all duration-300 group flex flex-col h-full hover:bg-gray-100">
-                    <div className="aspect-square flex items-center justify-center mb-8 p-4 bg-white border border-gray-100">
-                      <img src={product.thumbnail_url} alt={product.name} className="max-h-full object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" />
-                    </div>
-                    <div className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">{product.sku}</div>
-                    <h3 className="text-black font-semibold text-lg mb-4 leading-snug line-clamp-2">{product.name}</h3>
-                    <div className="mt-auto flex items-center justify-between">
-                      <span className="text-xl font-bold text-black">PKR {Number(product.price).toLocaleString()}</span>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-20 text-gray-400">Loading products...</div>
-            )}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* 2. Product Line Grid */}
-      <section className="py-32 bg-gray-50">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer} className="mb-20">
-            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-bold text-black mb-6 tracking-tight">Categories.</motion.h2>
-          </motion.div>
-          
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* 1. Category Circles (Top Navigation) */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-[1400px] mx-auto px-4 py-4 md:py-6">
+          <div className="flex overflow-x-auto gap-4 md:gap-8 pb-2 no-scrollbar justify-start md:justify-center">
             {CATEGORIES.map((cat, idx) => (
-              <motion.div variants={fadeInUp} key={idx} className="flex flex-col group h-full bg-white p-8 hover:shadow-xl transition-shadow duration-300">
-                <h3 className="text-black text-3xl font-bold mb-4">{cat.name}</h3>
-                <p className="text-gray-500 text-lg leading-relaxed mb-8 max-w-md">{cat.desc}</p>
-                <div className="w-full aspect-video bg-gray-100 flex items-center justify-center mb-8 overflow-hidden">
-                  <img 
-                    src={cat.image} 
-                    alt={cat.name} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+              <Link key={idx} to={`/catalog?category=${cat.name}`} className="flex flex-col items-center gap-3 min-w-[80px] md:min-w-[100px] group">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-transparent group-hover:border-[#0056b3] transition-all p-1 bg-white shadow-sm">
+                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover rounded-full" />
                 </div>
-                <Link to={`/catalog?category=${cat.name}`} className="inline-flex items-center gap-2 text-black font-semibold hover:underline mt-auto">
-                  Explore {cat.name} <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
+                <span className="text-xs md:text-sm text-center font-medium text-gray-700 group-hover:text-[#0056b3] transition-colors leading-tight">
+                  {cat.name}
+                </span>
+              </Link>
             ))}
-          </motion.div>
+          </div>
         </div>
-      </section>
+      </div>
 
-      {/* 3. Marquee Brands Section */}
-      <section className="bg-white py-24 overflow-hidden border-y border-gray-100">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-16 px-6">
-          <h2 className="text-2xl font-bold text-gray-400 uppercase tracking-widest">Industry Leaders</h2>
-        </motion.div>
-        
-        <div className="relative w-full overflow-hidden flex" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
-          <motion.div 
-            animate={{ x: ["0%", "-50%"] }} 
-            transition={{ repeat: Infinity, ease: "linear", duration: 40 }} 
-            className="flex whitespace-nowrap gap-16 items-center w-max px-8"
-          >
-            {Array(4).fill(null).map((_, i) => (
-              <React.Fragment key={i}>
-                {BRANDS.map((brand, j) => (
-                  <div key={`${i}-${j}`} className="w-32 md:w-40 flex items-center justify-center grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100 duration-300">
-                     {brand.img.includes('http') ? (
-                       <img src={brand.img} alt={brand.name} className="max-w-full max-h-16 object-contain" />
-                     ) : (
-                       <span className="text-black font-black text-xl">{brand.name}</span>
-                     )}
-                  </div>
-                ))}
-              </React.Fragment>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      {/* 2. Hero Carousel (E-commerce Style) */}
+      <div className="max-w-[1400px] mx-auto px-4 mt-4 md:mt-6">
+        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-xl md:rounded-2xl overflow-hidden bg-gray-200 shadow-md group">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0"
+            >
+              <img src={HERO_SLIDES[currentSlide].image} alt="Promo" className="w-full h-full object-cover" />
+              <div className={`absolute inset-0 ${HERO_SLIDES[currentSlide].color} flex flex-col justify-center px-8 md:px-20`}>
+                <h2 className="text-white text-3xl md:text-6xl font-extrabold max-w-2xl leading-tight mb-4 shadow-black drop-shadow-lg">
+                  {HERO_SLIDES[currentSlide].title}
+                </h2>
+                <p className="text-gray-200 text-lg md:text-2xl mb-8 max-w-xl drop-shadow-md">
+                  {HERO_SLIDES[currentSlide].subtitle}
+                </p>
+                <div>
+                  <Link to="/catalog" className="inline-block bg-white text-black px-6 py-3 md:px-8 md:py-4 font-bold rounded shadow-lg hover:bg-gray-100 transition-colors uppercase tracking-wide text-sm">
+                    Shop Now
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
-      {/* 4. Trusted by Industry Grid */}
-      <section className="py-32 bg-black text-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer} className="mb-20">
-            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Applications.</motion.h2>
-          </motion.div>
+          {/* Carousel Controls */}
+          <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-black shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-black shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+            <ChevronRight className="w-6 h-6" />
+          </button>
           
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer} className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-            {INDUSTRIES.map((industry, idx) => (
-              <motion.div variants={fadeInUp} key={idx} className="h-[400px] relative group overflow-hidden bg-gray-900">
-                <Link to="/catalog?industry=true" className="block w-full h-full">
-                  <img 
-                    src={industry.image} 
-                    alt={industry.name} 
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-40"
-                  />
-                  <div className="absolute inset-0 flex items-end p-8">
-                    <h3 className="text-white text-3xl font-bold leading-tight max-w-xs">
-                      {industry.name}
-                    </h3>
-                  </div>
-                </Link>
-              </motion.div>
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            {HERO_SLIDES.map((_, idx) => (
+              <button 
+                key={idx} 
+                onClick={() => setCurrentSlide(idx)}
+                className={`w-3 h-3 rounded-full transition-all shadow-md ${currentSlide === idx ? "bg-white w-8" : "bg-white/50"}`}
+              />
             ))}
-          </motion.div>
+          </div>
         </div>
-      </section>
+      </div>
 
-      {/* 5. Support Banner */}
-      <section className="py-24 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-5 gap-8">
-            {[
-              { icon: Award, title: "Premium Quality", desc: "Industry standard" },
-              { icon: ShieldCheck, title: "Secure Checkout", desc: "100% protected" },
-              { icon: Users, title: "Expert Support", desc: "Dedicated team" },
-              { icon: HeadphonesIcon, title: "24/7 Service", desc: "Always here" },
-              { icon: Truck, title: "Fast Delivery", desc: "Nationwide shipping" }
-            ].map((item, idx) => (
-              <motion.div variants={fadeInUp} key={idx} className="flex flex-col items-start border-t border-gray-200 pt-8">
-                <item.icon className="w-8 h-8 text-black mb-6" strokeWidth={1.5} />
-                <h4 className="font-semibold text-lg text-black mb-2">{item.title}</h4>
-                <p className="text-gray-500">{item.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
+      {/* 3. Promotional Mid Banners */}
+      <div className="max-w-[1400px] mx-auto px-4 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <Link to="/catalog" className="block w-full aspect-[21/9] bg-blue-100 rounded-xl overflow-hidden relative group shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" alt="Promo 1" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A2540]/90 to-transparent p-8 flex flex-col justify-center">
+              <span className="bg-[#0056b3] text-white text-xs font-bold px-2 py-1 uppercase w-max mb-3 rounded">Hot Deal</span>
+              <h3 className="text-white text-2xl md:text-3xl font-bold mb-2 max-w-[60%]">Industrial Testing Gear</h3>
+              <p className="text-blue-100 text-sm md:text-base underline underline-offset-4">Shop Collection</p>
+            </div>
+          </Link>
+          <Link to="/catalog" className="block w-full aspect-[21/9] bg-green-100 rounded-xl overflow-hidden relative group shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=800&auto=format&fit=crop" alt="Promo 2" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/90 to-transparent p-8 flex flex-col justify-center">
+              <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 uppercase w-max mb-3 rounded">New In</span>
+              <h3 className="text-white text-2xl md:text-3xl font-bold mb-2 max-w-[60%]">Water Treatment Solutions</h3>
+              <p className="text-emerald-100 text-sm md:text-base underline underline-offset-4">Discover More</p>
+            </div>
+          </Link>
         </div>
-      </section>
+      </div>
+
+      {/* 4. Featured Products Grid (Dense E-commerce Style) */}
+      <div className="max-w-[1400px] mx-auto px-4 mt-12 md:mt-16">
+        <div className="flex items-center justify-between mb-6 border-b border-gray-300 pb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Featured Products</h2>
+          <Link to="/catalog" className="text-[#0056b3] font-medium hover:underline text-sm md:text-base flex items-center gap-1">
+            View All <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
+          {featuredProducts.length > 0 ? (
+            featuredProducts.map((product, idx) => (
+              <div key={product.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow group flex flex-col relative">
+                {/* Sale Badge Example (Randomized for visual effect on first 2) */}
+                {idx < 2 && (
+                  <div className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase z-10">
+                    Sale
+                  </div>
+                )}
+                
+                <Link to={`/product/${product.id}`} className="block relative aspect-square p-4 bg-white flex items-center justify-center">
+                  <img src={product.thumbnail_url} alt={product.name} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 mix-blend-multiply" />
+                </Link>
+                
+                <div className="p-3 md:p-4 flex flex-col flex-grow border-t border-gray-100">
+                  <div className="text-[10px] text-gray-400 mb-1 font-mono">{product.sku}</div>
+                  <Link to={`/product/${product.id}`} className="block">
+                    <h3 className="text-gray-800 text-sm md:text-sm font-medium mb-2 line-clamp-2 hover:text-[#0056b3] transition-colors leading-snug h-10">
+                      {product.name}
+                    </h3>
+                  </Link>
+                  <div className="mt-auto">
+                    <div className="text-[#0A2540] font-bold text-lg md:text-xl">
+                      PKR {Number(product.price).toLocaleString()}
+                    </div>
+                  </div>
+                  
+                  {/* Immediate Action Button */}
+                  <Link to={`/product/${product.id}`} className="mt-3 w-full bg-[#f4f8fb] hover:bg-[#0056b3] hover:text-white text-[#0056b3] border border-blue-100 font-semibold py-2 rounded text-center text-xs md:text-sm transition-colors flex items-center justify-center gap-2">
+                    <ShoppingCart className="w-4 h-4" /> View Details
+                  </Link>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full py-12 text-center text-gray-500">Loading products...</div>
+          )}
+        </div>
+      </div>
+
+      {/* 5. Official Brands Banner */}
+      <div className="max-w-[1400px] mx-auto px-4 mt-12 md:mt-16">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
+          <h2 className="text-center text-xl font-bold text-gray-800 mb-8 uppercase tracking-wide">Official Partners & Brands</h2>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70">
+            {BRANDS.map((brand, idx) => (
+              <div key={idx} className="h-8 md:h-12 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
+                {brand.img.includes('http') ? (
+                  <img src={brand.img} alt={brand.name} className="max-h-full max-w-[120px] md:max-w-[160px] object-contain" />
+                ) : (
+                  <span className="font-black text-xl text-gray-800">{brand.name}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* 6. Value Propositions (Footer Banner) */}
+      <div className="max-w-[1400px] mx-auto px-4 mt-12 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { icon: Truck, title: "Free Delivery", desc: "For orders over Rs. 50,000" },
+            { icon: ShieldCheck, title: "100% Authentic", desc: "Sourced directly from brands" },
+            { icon: Award, title: "Best Prices", desc: "Guaranteed market competitive" },
+            { icon: HeadphonesIcon, title: "24/7 Support", desc: "Dedicated technical assistance" }
+          ].map((val, idx) => (
+            <div key={idx} className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-3 md:gap-4 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-[#0056b3] bg-blue-50 p-3 rounded-full">
+                <val.icon className="w-6 h-6 md:w-8 md:h-8" />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 text-sm md:text-base">{val.title}</h4>
+                <p className="text-xs md:text-sm text-gray-500">{val.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
     </div>
   );
