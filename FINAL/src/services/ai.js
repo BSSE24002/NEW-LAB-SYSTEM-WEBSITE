@@ -1,16 +1,8 @@
-import { GoogleGenAI } from '@google/genai';
-
-// We initialize the client if the API key is present
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
-let aiClient = null;
-if (apiKey) {
-  aiClient = new GoogleGenAI({ apiKey: apiKey });
-}
-
 export async function enhanceProductDescription(rawText) {
-  if (!aiClient) {
-    throw new Error("VITE_GEMINI_API_KEY is not set in your .env file.");
+  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error("VITE_GROQ_API_KEY is not set in your .env or Vercel settings.");
   }
 
   const prompt = `
@@ -33,22 +25,36 @@ ${rawText}
   `;
 
   try {
-    const response = await aiClient.models.generateContent({
-      model: 'gemini-2.0-flash',
-      contents: prompt,
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [{ role: "user", content: prompt }]
+      })
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error?.message || "Failed to fetch from Groq API");
+    }
+
+    const data = await response.json();
+    let html = data.choices[0].message.content;
     
-    let html = response.text;
     // Strip markdown code blocks if the model still outputs them despite instructions
     if (html.startsWith('\`\`\`html')) {
-      html = html.replace(/^\`\`\`html\\n?/, '').replace(/\\n?\`\`\`$/, '');
+      html = html.replace(/^\`\`\`html\n?/, '').replace(/\n?\`\`\`$/, '');
     } else if (html.startsWith('\`\`\`')) {
-      html = html.replace(/^\`\`\`\\n?/, '').replace(/\\n?\`\`\`$/, '');
+      html = html.replace(/^\`\`\`\n?/, '').replace(/\n?\`\`\`$/, '');
     }
     
     return html.trim();
   } catch (error) {
-    console.error("Error calling Gemini API:", error);
-    throw new Error("Failed to enhance description. Check console for details.");
+    console.error("Error calling Groq API:", error);
+    throw new Error(error.message || "Failed to enhance description. Check console for details.");
   }
 }
