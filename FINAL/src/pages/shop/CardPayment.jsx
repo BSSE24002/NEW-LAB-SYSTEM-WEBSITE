@@ -52,7 +52,7 @@ export function CardPayment() {
       });
 
       setItems([]);
-      navigate("/checkout/confirmation", { state: { orderId: newOrder.id, status: newOrder.status } });
+      navigate("/checkout/confirmation", { state: { orderId: newOrder.order_code || newOrder.id, status: newOrder.status } });
     } catch (e) {
       alert(`Payment failed: ${e.message}`);
     } finally {
