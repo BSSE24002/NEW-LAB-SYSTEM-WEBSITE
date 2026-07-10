@@ -17,6 +17,7 @@ const getAllOrders = async (req, res) => {
         const ordersResult = await db.query(`
             SELECT 
                 o.id,
+                o.order_code,
                 'online' AS type,
                 o.customer_email,
                 o.customer_phone,

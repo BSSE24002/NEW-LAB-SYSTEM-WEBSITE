@@ -105,7 +105,7 @@ export function OrdersManagement() {
               {filteredOrders.map((order) => (
                 <tr key={`${order.type}-${order.id}`} onClick={() => openOrder(order)}
                   className="hover:bg-gray-50/50 transition-colors cursor-pointer">
-                  <td className="p-5 font-mono text-xs text-brand-obsidian font-bold">{order.id}</td>
+                  <td className="p-5 font-mono text-xs text-brand-obsidian font-bold">{order.order_code || order.id}</td>
                   <td className="p-5 font-mono text-xs uppercase text-gray-400">{order.type}</td>
                   <td className="p-5 text-gray-500 text-sm">
                     {order.type === "online" ? (order.customer_email || order.customer_phone) : order.cashier}
@@ -167,7 +167,7 @@ export function OrdersManagement() {
             <div className="p-8 border-b border-gray-100 bg-[#FAFAFA]">
               <h2 className="text-2xl font-serif tracking-wide text-brand-obsidian mb-2">Order Details</h2>
               <div className="flex items-center gap-4 text-xs font-mono uppercase tracking-widest text-gray-500">
-                <span className="font-bold text-brand-obsidian">{selectedOrder.id}</span>
+                <span className="font-bold text-brand-obsidian">{selectedOrder.order_code || selectedOrder.id}</span>
                 <span>//</span>
                 <span>{selectedOrder.type}</span>
                 <span>//</span>
