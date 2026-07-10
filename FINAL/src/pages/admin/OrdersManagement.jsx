@@ -9,6 +9,7 @@ export function OrdersManagement() {
   const [filter, setFilter] = useState("all");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [trackingNo, setTrackingNo] = useState("");
+  const [deliveryProvider, setDeliveryProvider] = useState("");
 
   const role = localStorage.getItem("userRole");
 
@@ -49,15 +50,15 @@ export function OrdersManagement() {
     } catch (e) { alert(`Delete failed: ${e.message}`); }
   };
 
-  const openOrder = (order) => { setSelectedOrder(order); setTrackingNo(order.tracking_no || ""); };
-  const closeOrder = () => { setSelectedOrder(null); setTrackingNo(""); };
+  const openOrder = (order) => { setSelectedOrder(order); setTrackingNo(order.tracking_no || ""); setDeliveryProvider(order.delivery_provider || ""); };
+  const closeOrder = () => { setSelectedOrder(null); setTrackingNo(""); setDeliveryProvider(""); };
 
   const handleUpdateTracking = async () => {
     if (!selectedOrder || selectedOrder.type !== "online") return;
     try {
-      await api.updateTracking(selectedOrder.id, trackingNo);
-      setOrders((prev) => prev.map((o) => o.id === selectedOrder.id ? { ...o, tracking_no: trackingNo } : o));
-      setSelectedOrder((s) => ({ ...s, tracking_no: trackingNo }));
+      await api.updateTracking(selectedOrder.id, trackingNo, deliveryProvider);
+      setOrders((prev) => prev.map((o) => o.id === selectedOrder.id ? { ...o, tracking_no: trackingNo, delivery_provider: deliveryProvider } : o));
+      setSelectedOrder((s) => ({ ...s, tracking_no: trackingNo, delivery_provider: deliveryProvider }));
     } catch (e) { alert(`Failed: ${e.message}`); }
   };
 
@@ -198,14 +199,19 @@ export function OrdersManagement() {
                       <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4 flex items-center gap-2">
                         <Truck className="w-3.5 h-3.5" /> Delivery Tracking
                       </h3>
-                      <div className="flex gap-2">
-                        <input type="text" value={trackingNo} onChange={(e) => setTrackingNo(e.target.value)}
-                          placeholder="Enter Tracking No."
-                          className="flex-1 px-4 py-2 bg-[#FAFAFA] border border-gray-200 outline-none focus:border-brand-obsidian text-sm font-mono transition-colors" />
-                        <button onClick={handleUpdateTracking}
-                          className="px-6 py-2 bg-brand-obsidian text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-colors">
-                          Save
-                        </button>
+                      <div className="flex flex-col gap-2">
+                        <input type="text" value={deliveryProvider} onChange={(e) => setDeliveryProvider(e.target.value)}
+                          placeholder="Provider (e.g. TCS, DHL)"
+                          className="w-full px-4 py-2 bg-[#FAFAFA] border border-gray-200 outline-none focus:border-brand-obsidian text-sm font-mono transition-colors" />
+                        <div className="flex gap-2">
+                          <input type="text" value={trackingNo} onChange={(e) => setTrackingNo(e.target.value)}
+                            placeholder="Enter Tracking No."
+                            className="flex-1 px-4 py-2 bg-[#FAFAFA] border border-gray-200 outline-none focus:border-brand-obsidian text-sm font-mono transition-colors" />
+                          <button onClick={handleUpdateTracking}
+                            className="px-6 py-2 bg-brand-obsidian text-white text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-colors">
+                            Save
+                          </button>
+                        </div>
                       </div>
                     </div>
                     <div>

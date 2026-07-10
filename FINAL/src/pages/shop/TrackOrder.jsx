@@ -67,6 +67,23 @@ export function TrackOrder() {
                   </div>
                 </div>
 
+                {(result.tracking_no || result.delivery_provider) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-black/5 pt-8">
+                    {result.delivery_provider && (
+                      <div>
+                        <h4 className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase mb-2">Delivery Provider</h4>
+                        <p className="font-sans text-xl font-bold text-brand-obsidian">{result.delivery_provider}</p>
+                      </div>
+                    )}
+                    {result.tracking_no && (
+                      <div className={result.delivery_provider ? "md:text-right" : ""}>
+                        <h4 className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase mb-2">Tracking No.</h4>
+                        <p className="font-mono text-xl">{result.tracking_no}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="bg-gray-50 rounded-2xl p-6 border border-black/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <span className="uppercase font-black tracking-[0.2em] text-[10px] text-gray-500">Current Status</span>
                   <span className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest ${
@@ -89,11 +106,27 @@ export function TrackOrder() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 pt-6 border-t border-black/10 flex justify-between items-center">
-                    <span className="uppercase font-black tracking-[0.2em] text-xs">Final Settlement</span>
-                    <span className="font-mono text-2xl font-bold">
-                      PKR {parseFloat(result.total_amount || result.total || 0).toFixed(2)}
-                    </span>
+                  <div className="mt-6 pt-6 border-t border-black/10 flex flex-col gap-2">
+                    <div className="flex justify-between items-center text-sm text-gray-500">
+                      <span className="uppercase font-black tracking-[0.1em] text-[10px]">Subtotal</span>
+                      <span className="font-mono">PKR {parseFloat(result.subtotal || 0).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm text-gray-500">
+                      <span className="uppercase font-black tracking-[0.1em] text-[10px]">Shipping</span>
+                      <span className="font-mono">PKR {parseFloat(result.shipping || 0).toFixed(2)}</span>
+                    </div>
+                    {parseFloat(result.discount || 0) > 0 && (
+                      <div className="flex justify-between items-center text-sm text-green-600">
+                        <span className="uppercase font-black tracking-[0.1em] text-[10px]">Discount</span>
+                        <span className="font-mono">- PKR {parseFloat(result.discount || 0).toFixed(2)}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between items-center mt-2 pt-4 border-t border-black/10">
+                      <span className="uppercase font-black tracking-[0.2em] text-xs">Final Settlement</span>
+                      <span className="font-mono text-2xl font-bold text-brand-obsidian">
+                        PKR {parseFloat(result.total_amount || result.total || 0).toFixed(2)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </motion.div>

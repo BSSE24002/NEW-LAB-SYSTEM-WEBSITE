@@ -30,6 +30,7 @@ const getAllOrders = async (req, res) => {
                 o.discount,
                 o.total_amount AS total,
                 o.tracking_no,
+                o.delivery_provider,
                 o.created_at AS date
             FROM Online_Orders o
             ORDER BY o.created_at DESC;
@@ -203,10 +204,10 @@ const updateOrderStatus = async (req, res) => {
 // PATCH /api/orders/:id/tracking
 const updateTracking = async (req, res) => {
     try {
-        const { tracking_no } = req.body;
+        const { tracking_no, delivery_provider } = req.body;
         const result = await db.query(
-            'UPDATE Online_Orders SET tracking_no=$1 WHERE id=$2 RETURNING *;',
-            [tracking_no, req.params.id]
+            'UPDATE Online_Orders SET tracking_no=$1, delivery_provider=$2 WHERE id=$3 RETURNING *;',
+            [tracking_no, delivery_provider, req.params.id]
         );
         if (result.rows.length === 0) return res.status(404).json({ error: 'Order not found.' });
         res.status(200).json(result.rows[0]);

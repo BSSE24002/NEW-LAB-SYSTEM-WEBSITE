@@ -52,7 +52,7 @@ export const api = {
   getOrder: (id) => request('GET', `/orders/${id}`),
   createOrder: (data) => request('POST', '/orders', data),
   updateOrderStatus: (id, status) => request('PATCH', `/orders/${id}/status`, { status }),
-  updateTracking: (id, tracking_no) => request('PATCH', `/orders/${id}/tracking`, { tracking_no }),
+  updateTracking: (id, tracking_no, delivery_provider) => request('PATCH', `/orders/${id}/tracking`, { tracking_no, delivery_provider }),
   deleteOrder: (id) => request('DELETE', `/orders/${id}`),
   trackOrder: (orderId) => request('GET', `/orders/track/${orderId}`),
 
