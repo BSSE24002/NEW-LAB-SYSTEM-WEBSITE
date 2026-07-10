@@ -192,7 +192,7 @@ export function Header() {
               to="/"
               className="text-3xl font-sans font-black tracking-tighter uppercase relative group"
             >
-              <img src="/footer.png" alt="NEW LAB SYSTEM" className="h-10 animate-logo" />
+              <img src="/logo1.png" alt="NEW LAB SYSTEM" className="h-10 animate-logo" />
             </Link>
           </div>
 
