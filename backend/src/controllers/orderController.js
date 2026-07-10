@@ -1,6 +1,16 @@
 // File: backend/src/controllers/orderController.js
 const db = require('../config/db');
 
+// Generates a random 8-character uppercase alphanumeric order code e.g. "A3XK9T2B"
+function generateOrderCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+        code += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return code;
+}
+
 // GET /api/orders - unified list (online + pos wrapped as orders)
 const getAllOrders = async (req, res) => {
     try {
@@ -115,16 +125,26 @@ const createOrder = async (req, res) => {
             customer_id = custResult.rows[0].id;
         }
 
+        // Generate unique 8-char order code (retry if collision)
+        let order_code;
+        for (let attempt = 0; attempt < 10; attempt++) {
+            const candidate = generateOrderCode();
+            const existing = await client.query('SELECT 1 FROM Online_Orders WHERE order_code=$1', [candidate]);
+            if (existing.rows.length === 0) { order_code = candidate; break; }
+        }
+        if (!order_code) throw new Error('Could not generate unique order code');
+
         // Create order
         const orderResult = await client.query(
             `INSERT INTO Online_Orders
-             (customer_id, customer_email, customer_phone, shipping_address, payment_method, payment_details, subtotal, shipping, discount, total_amount, status)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;`,
+             (customer_id, customer_email, customer_phone, shipping_address, payment_method, payment_details, subtotal, shipping, discount, total_amount, status, order_code)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *;`,
             [
                 customer_id, customer_email, customer_phone, shipping_address,
                 payment_method, payment_details || {},
                 subtotal || 0, shipping || 0, discount || 0, total_amount,
-                payment_method === 'bank_transfer' ? 'pending_verification' : 'confirmed'
+                payment_method === 'bank_transfer' ? 'pending_verification' : 'confirmed',
+                order_code
             ]
         );
         const newOrder = orderResult.rows[0];
@@ -206,10 +226,14 @@ const deleteOrder = async (req, res) => {
     }
 };
 
-// GET /api/orders/track/:orderId - public tracking
+// GET /api/orders/track/:orderId - public tracking by order_code
 const trackOrder = async (req, res) => {
     try {
-        const result = await db.query('SELECT * FROM Online_Orders WHERE id = $1', [req.params.orderId]);
+        const code = req.params.orderId.trim().toUpperCase();
+        const result = await db.query(
+            'SELECT * FROM Online_Orders WHERE order_code = $1',
+            [code]
+        );
         if (result.rows.length === 0) return res.status(404).json({ error: 'Order not found.' });
         const order = result.rows[0];
         const itemsResult = await db.query(

@@ -38,7 +38,7 @@ export function TrackOrder() {
 
           <div className="bg-white p-8 md:p-12 shadow-2xl rounded-3xl border border-black/5 relative overflow-hidden">
             <div className="flex flex-col sm:flex-row gap-4 relative z-10">
-              <input type="text" placeholder="e.g. ORD-123456"
+              <input type="text" placeholder="e.g. A3XK9T2B"
                 className="flex-1 px-6 py-5 bg-gray-50 border-2 border-transparent rounded-2xl outline-none focus:border-brand-obsidian focus:bg-white font-mono text-lg transition-all"
                 value={orderId} onChange={(e) => setOrderId(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()} />
@@ -59,7 +59,7 @@ export function TrackOrder() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
                     <h4 className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase mb-2">Order Reference</h4>
-                    <p className="font-mono text-2xl font-bold">{result.id}</p>
+                    <p className="font-mono text-2xl font-bold">{result.order_code || result.id}</p>
                   </div>
                   <div className="md:text-right">
                     <h4 className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase mb-2">Date Confirmed</h4>
