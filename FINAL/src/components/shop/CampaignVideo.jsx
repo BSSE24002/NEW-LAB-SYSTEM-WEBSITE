@@ -33,7 +33,7 @@ export function CampaignVideo() {
               loop
               muted
               playsInline
-              src="./public/vid.mp4"
+              src="/vid.mp4"
             >
               Your browser does not support the video tag.
             </video>
