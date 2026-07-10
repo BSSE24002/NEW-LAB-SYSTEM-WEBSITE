@@ -174,8 +174,8 @@ export function Checkout() {
                   <p className="text-[10px] text-gray-500 uppercase tracking-widest">Please transfer the total amount to the following account:</p>
                 </div>
                 <div className="font-mono text-sm mb-6 bg-white p-5 border border-gray-200 shadow-sm">
-                  <p className="mb-1 text-gray-500 uppercase tracking-widest text-[10px]">Bank</p><p className="mb-4">First Drape Bank</p>
-                  <p className="mb-1 text-gray-500 uppercase tracking-widest text-[10px]">Account Title</p><p className="mb-4">DRAPE OFFICIAL</p>
+                  <p className="mb-1 text-gray-500 uppercase tracking-widest text-[10px]">Bank</p><p className="mb-4">New Lab Bank</p>
+                  <p className="mb-1 text-gray-500 uppercase tracking-widest text-[10px]">Account Title</p><p className="mb-4">NEW LAB OFFICIAL</p>
                   <p className="mb-1 text-gray-500 uppercase tracking-widest text-[10px]">Account No</p><p>1234 5678 9101 1121</p>
                 </div>
                 <div className="space-y-4">

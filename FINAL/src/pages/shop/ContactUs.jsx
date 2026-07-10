@@ -36,8 +36,8 @@ export function ContactUs() {
                 <p className="text-gray-500 text-sm leading-relaxed mb-4">
                   Have a question about an order, sizing, or our products? Our team is available Monday to Friday, 9am - 6pm PKT.
                 </p>
-                <a href="mailto:support@drape.com" className="text-brand-obsidian font-bold tracking-widest text-xs uppercase border-b border-brand-obsidian pb-1">
-                  support@drape.com
+                <a href="mailto:support@newlab.com" className="text-brand-obsidian font-bold tracking-widest text-xs uppercase border-b border-brand-obsidian pb-1">
+                  support@newlab.com
                 </a>
               </div>
               <div>
@@ -45,8 +45,8 @@ export function ContactUs() {
                 <p className="text-gray-500 text-sm leading-relaxed mb-4">
                   For all B2B inquiries, stockist requests, and media relations, please reach out to our partnerships team.
                 </p>
-                <a href="mailto:partnerships@drape.com" className="text-brand-obsidian font-bold tracking-widest text-xs uppercase border-b border-brand-obsidian pb-1">
-                  partnerships@drape.com
+                <a href="mailto:partnerships@newlab.com" className="text-brand-obsidian font-bold tracking-widest text-xs uppercase border-b border-brand-obsidian pb-1">
+                  partnerships@newlab.com
                 </a>
               </div>
             </div>

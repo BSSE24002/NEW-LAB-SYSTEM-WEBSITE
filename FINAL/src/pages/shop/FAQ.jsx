@@ -26,11 +26,11 @@ export function FAQ() {
     },
     {
       q: "How can I contact customer service?",
-      a: "You can reach us at support@drape.com or use the contact form on our Contact Us page. Our support team is available Monday to Friday, 9am - 6pm PKT."
+      a: "You can reach us at support@newlab.com or use the contact form on our Contact Us page. Our support team is available Monday to Friday, 9am - 6pm PKT."
     },
     {
-      q: "Are the garments pre-shrunk?",
-      a: "Yes, our heavyweight cotton garments undergo a pre-shrinking process during manufacturing to ensure minimal shrinkage after your first wash."
+      q: "Are the instruments pre-calibrated?",
+      a: "Yes, all our analytical instruments undergo a rigorous factory calibration process prior to shipping to ensure immediate accuracy out of the box."
     }
   ];
 

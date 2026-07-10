@@ -137,17 +137,17 @@ export function Header() {
                     <ul className={styles.megaMenuList}>
                       <li>
                         <Link to="/catalog" className={styles.megaMenuLink}>
-                          Summer Collection
+                          Advanced Spectrometry
                         </Link>
                       </li>
                       <li>
                         <Link to="/catalog" className={styles.megaMenuLink}>
-                          The Core Uniform
+                          Precision Optics
                         </Link>
                       </li>
                       <li>
                         <Link to="/catalog" className={styles.megaMenuLink}>
-                          Heavyweight Cotton
+                          Automation Systems
                         </Link>
                       </li>
                       <li>

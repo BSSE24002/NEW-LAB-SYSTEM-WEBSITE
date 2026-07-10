@@ -57,12 +57,15 @@ export function AdminLayout() {
 
   return (
     <POSProvider>
-      <div className="flex h-screen bg-[#FDFDFD] text-brand-obsidian overflow-hidden font-sans">
+      <div className="flex h-screen bg-[#FDFDFD] text-brand-obsidian overflow-hidden font-sans relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] font-sans font-black tracking-tighter uppercase text-gray-50 pointer-events-none select-none z-0">
+          NEW LAB<span className="text-red-500">.</span>
+        </div>
         {/* Sidebar */}
         <aside className="w-64 bg-white flex flex-col z-20 shrink-0 border-r border-gray-200">
           <div className="h-20 flex items-center px-8 border-b border-gray-100">
             <span className="font-sans font-black text-2xl tracking-tighter text-brand-obsidian uppercase">
-              DRAPE<span className="text-red-500">.</span>
+              NEW LAB<span className="text-red-500">.</span>
             </span>
           </div>
 

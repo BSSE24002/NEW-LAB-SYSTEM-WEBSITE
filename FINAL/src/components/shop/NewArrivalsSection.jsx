@@ -5,34 +5,34 @@ import { ScrollReveal } from "./ScrollReveal";
 
 const ARRIVALS = [
   {
-    title: "T-Shirts",
-    image: "https://i.pinimg.com/736x/f4/a8/f7/f4a8f7500522a4177075fc068977e9f1.jpg",
-    link: "/catalog?category=tees"
+    title: "Spectrometers",
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=687&auto=format&fit=crop",
+    link: "/catalog?category=Spectrometers"
   },
   {
-    title: "T-Shirts",
-    image: "https://i.pinimg.com/736x/14/99/70/149970db619d38285a6612eb26f7bbe7.jpg",
-    link: "/catalog?category=bottoms"
+    title: "Microscopes",
+    image: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=687&auto=format&fit=crop",
+    link: "/catalog?category=Microscopes"
   },
   {
-    title: "Shirts",
-    image: "https://i.pinimg.com/736x/ae/13/a8/ae13a800589b6c77cfe032077cfcccdf.jpg",
-    link: "/catalog?category=outerwear"
+    title: "Chromatographs",
+    image: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=687&auto=format&fit=crop",
+    link: "/catalog?category=Chromatographs"
   },
   {
-    title: "Caps",
-    image: "https://i.pinimg.com/736x/37/88/b8/3788b8e278d5b63aec8215a25ea662c9.jpg",
-    link: "/catalog"
+    title: "Centrifuges",
+    image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=687&auto=format&fit=crop",
+    link: "/catalog?category=Centrifuges"
   },
   {
-    title: "Hoodies & Sweatshirts",
-    image: "https://i.pinimg.com/1200x/70/ec/01/70ec01dfb695634e3b365755bdf2aba8.jpg",
-    link: "/catalog"
+    title: "Thermal Cyclers",
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=687&auto=format&fit=crop",
+    link: "/catalog?category=Thermal Cyclers"
   },
   {
-    title: "Caps",
-    image: "https://i.pinimg.com/1200x/c1/92/1a/c1921a895f4d386ea57af8f5280b55d7.jpg",
-    link: "/catalog"
+    title: "Balances",
+    image: "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=687&auto=format&fit=crop",
+    link: "/catalog?category=Balances"
   }
 ];
 
