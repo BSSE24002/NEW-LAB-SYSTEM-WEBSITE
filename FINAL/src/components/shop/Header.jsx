@@ -8,6 +8,40 @@ import styles from "./Header.module.css";
 import { LoginModal } from "./LoginModal";
 import { api } from "../../services/api";
 
+const ANNOUNCEMENTS = [
+  "Free Shipping on orders over PKR 50,000",
+  "New generation Spectrometers are now in stock.",
+  "Need a custom laboratory setup? Contact our engineers."
+];
+
+function AnnouncementBar() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % ANNOUNCEMENTS.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="bg-blue-600 text-white text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase py-2.5 px-4 text-center overflow-hidden flex justify-center items-center h-9">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+          className="whitespace-nowrap"
+        >
+          {ANNOUNCEMENTS[index]}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -75,9 +109,11 @@ export function Header() {
 
   return (
     <>
-      <header
-        className={`${styles.header} ${isScrolled ? styles.solid : styles.transparent} fixed top-0 w-full`}
-      >
+      <div className="sticky top-0 z-[120] w-full flex flex-col shadow-sm">
+        <AnnouncementBar />
+        <header
+          className={`${styles.header} ${isScrolled ? styles.solid : "bg-white border-b border-gray-100"} w-full transition-colors duration-300`}
+        >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between relative">
           <div className="flex items-center gap-8">
             <button className="p-2 -ml-2 block md:hidden" onClick={() => setIsMobileMenuOpen(true)}>
@@ -241,6 +277,7 @@ export function Header() {
           </div>
         </div>
       </header>
+      </div>
 
       <AnimatePresence>
         {isSearchOpen && (
