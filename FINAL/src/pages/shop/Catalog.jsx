@@ -5,6 +5,7 @@ import { Loader2, PackageX, WifiOff } from "lucide-react";
 import { ProductCard } from "../../components/shop/ProductCard";
 import { ScrollReveal } from "../../components/shop/ScrollReveal";
 import api from "../../services/api";
+import { useLocation } from "react-router-dom";
 
 /**
  * Fetches products via the central api.js service (uses correct backend URL in prod).
@@ -18,7 +19,20 @@ export function Catalog() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeCategory, setActiveCategory] = useState("All");
+  
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const initialCategory = searchParams.get("category") || "All";
+  const searchQuery = searchParams.get("search")?.toLowerCase() || "";
+
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
+
+  useEffect(() => {
+    const categoryParam = searchParams.get("category");
+    if (categoryParam) {
+      setActiveCategory(categoryParam);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     let cancelled = false;
@@ -47,13 +61,20 @@ export function Catalog() {
     return ["All", ...Array.from(cats).sort()];
   }, [products]);
 
-  const filteredProducts = useMemo(
-    () =>
-      activeCategory === "All"
-        ? products
-        : products.filter((p) => p.category_name === activeCategory),
-    [products, activeCategory]
-  );
+  const filteredProducts = useMemo(() => {
+    let result = products;
+    if (activeCategory !== "All") {
+      result = result.filter((p) => p.category_name === activeCategory);
+    }
+    if (searchQuery) {
+      result = result.filter((p) => 
+        p.name?.toLowerCase().includes(searchQuery) || 
+        p.description?.toLowerCase().includes(searchQuery) ||
+        p.sku?.toLowerCase().includes(searchQuery)
+      );
+    }
+    return result;
+  }, [products, activeCategory, searchQuery]);
 
   return (
     <div className="bg-brand-pure-white text-brand-obsidian min-h-screen pt-32 pb-40">

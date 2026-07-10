@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ShoppingBag, Search, Menu, User, Shield } from "lucide-react";
 import { useCart } from "../../context/CartContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "motion/react";
 import styles from "./Header.module.css";
 import { LoginModal } from "./LoginModal";
 import { api } from "../../services/api";
@@ -10,6 +11,8 @@ import { api } from "../../services/api";
 export function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const { items, setIsCartOpen } = useCart();
@@ -48,6 +51,15 @@ export function Header() {
       navigate("/profile");
     } else {
       setIsLoginOpen(true);
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setIsSearchOpen(false);
+      navigate(`/catalog?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
     }
   };
 
@@ -175,7 +187,10 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-8">
-            <button className="p-2 hidden md:block">
+            <button 
+              className="p-2 hidden md:block hover:opacity-70 transition-opacity"
+              onClick={() => setIsSearchOpen(true)}
+            >
               <Search className="w-5 h-5" />
             </button>
             <button
@@ -216,6 +231,41 @@ export function Header() {
           </div>
         </div>
       </header>
+
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-0 left-0 w-full h-[300px] bg-brand-pure-white text-brand-obsidian shadow-2xl z-50 p-6 md:p-12 flex flex-col items-center justify-center border-b border-gray-100"
+          >
+            <div className="w-full max-w-3xl relative">
+              <form onSubmit={handleSearchSubmit}>
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" />
+                <input
+                  type="text"
+                  autoFocus
+                  placeholder="SEARCH FOR ITEMS..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-gray-50 border-none outline-none py-6 pl-14 pr-24 text-xl md:text-3xl font-black uppercase tracking-widest placeholder:text-gray-300 focus:bg-gray-100 transition-colors"
+                />
+                <button 
+                  type="button" 
+                  onClick={() => setIsSearchOpen(false)} 
+                  className="absolute right-6 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-brand-obsidian transition-colors"
+                >
+                  Close
+                </button>
+              </form>
+            </div>
+            <p className="mt-8 text-xs font-medium text-gray-400 tracking-widest uppercase">
+              Press Enter to search
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </>
