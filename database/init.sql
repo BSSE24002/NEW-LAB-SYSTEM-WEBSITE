@@ -163,7 +163,16 @@ VALUES ('Admin', 'admin@flow.com', 'admin1234', '1234', 'admin', TRUE)
 ON CONFLICT (email) DO NOTHING;
 
 -- Seed default categories
-INSERT INTO Product_Categories (name) VALUES ('Tops') ON CONFLICT DO NOTHING;
-INSERT INTO Product_Categories (name) VALUES ('Bottoms') ON CONFLICT DO NOTHING;
-INSERT INTO Product_Categories (name) VALUES ('Knitwear') ON CONFLICT DO NOTHING;
-INSERT INTO Product_Categories (name) VALUES ('Outerwear') ON CONFLICT DO NOTHING;
+INSERT INTO Product_Categories (name) VALUES ('Spectrometers') ON CONFLICT DO NOTHING;
+INSERT INTO Product_Categories (name) VALUES ('Chromatographs') ON CONFLICT DO NOTHING;
+INSERT INTO Product_Categories (name) VALUES ('Microscopes') ON CONFLICT DO NOTHING;
+INSERT INTO Product_Categories (name) VALUES ('Centrifuges') ON CONFLICT DO NOTHING;
+
+-- 12. POSTS (News/Updates)
+CREATE TABLE IF NOT EXISTS Posts (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    author_id INTEGER REFERENCES Users(id) ON DELETE SET NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

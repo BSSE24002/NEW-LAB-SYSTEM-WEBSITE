@@ -10,7 +10,7 @@ export function Checkout() {
   const { items, total, setItems } = useCart();
 
   const [formData, setFormData] = useState({ email: "", phone: "", address: "", city: "", zipCode: "" });
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [paymentMethod, setPaymentMethod] = useState("bank");
   const [bankDetails, setBankDetails] = useState({ accountTitle: "", tid: "", screenshot: "" });
   const [discountCode, setDiscountCode] = useState("");
   const [discountAmount, setDiscountAmount] = useState(0);
@@ -53,10 +53,7 @@ export function Checkout() {
       return;
     }
 
-    if (paymentMethod === "card") {
-      navigate("/checkout/card", { state: { formData, finalTotal, discountAmount, shippingCharges } });
-      return;
-    }
+    // Card payment removed
 
     setIsPlacing(true);
     try {
@@ -161,12 +158,7 @@ export function Checkout() {
           <section>
             <h2 className="text-2xl font-serif mb-8 tracking-wide text-brand-obsidian">Payment Method</h2>
             <div className="space-y-4">
-              <label className={`block p-5 border cursor-pointer transition-colors ${paymentMethod === "card" ? "border-brand-obsidian bg-gray-50" : "border-gray-200 bg-[#FAFAFA]"}`}>
-                <div className="flex items-center">
-                  <input type="radio" name="payment" value="card" checked={paymentMethod === "card"} onChange={() => setPaymentMethod("card")} className="mr-4 w-4 h-4 accent-brand-obsidian" />
-                  <span className="font-bold uppercase tracking-widest text-[10px] text-brand-obsidian mt-0.5">Pay with Card</span>
-                </div>
-              </label>
+              {/* Card option removed */}
               <label className={`block p-5 border cursor-pointer transition-colors ${paymentMethod === "bank" ? "border-brand-obsidian bg-gray-50" : "border-gray-200 bg-[#FAFAFA]"}`}>
                 <div className="flex items-center">
                   <input type="radio" name="payment" value="bank" checked={paymentMethod === "bank"} onChange={() => setPaymentMethod("bank")} className="mr-4 w-4 h-4 accent-brand-obsidian" />
@@ -258,7 +250,7 @@ export function Checkout() {
 
             <button onClick={handleConfirmOrder} disabled={items.length === 0 || isPlacing}
               className="w-full bg-brand-obsidian text-white py-5 uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-              {isPlacing ? "Placing Order..." : paymentMethod === "card" ? "Continue to Payment" : "Confirm Order"}
+              {isPlacing ? "Placing Order..." : "Confirm Order"}
             </button>
           </div>
         </div>

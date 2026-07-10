@@ -14,9 +14,9 @@ import { StaffManagement } from "./pages/admin/StaffManagement";
 import { ProductsManagement } from "./pages/admin/ProductsManagement";
 import { CategoriesManagement } from "./pages/admin/CategoriesManagement";
 import { DiscountsManagement } from "./pages/admin/DiscountsManagement";
+import { PostsManagement } from "./pages/admin/PostsManagement";
 
 import { Checkout } from "./pages/shop/Checkout";
-import { CardPayment } from "./pages/shop/CardPayment";
 import { OrderConfirmation } from "./pages/shop/OrderConfirmation";
 import { TrackOrder } from "./pages/shop/TrackOrder";
 import { ShippingReturns } from "./pages/shop/ShippingReturns";
@@ -36,7 +36,6 @@ export default function App() {
           <Route path="about" element={<About />} />
           <Route path="profile" element={<Profile />} />
           <Route path="checkout" element={<Checkout />} />
-          <Route path="checkout/card" element={<CardPayment />} />
           <Route path="checkout/confirmation" element={<OrderConfirmation />} />
           <Route path="track-order" element={<TrackOrder />} />
           <Route path="shipping-returns" element={<ShippingReturns />} />
@@ -54,6 +53,7 @@ export default function App() {
           <Route path="pos" element={<POSRegister />} />
           <Route path="inventory" element={<InventoryGrid />} />
           <Route path="orders" element={<OrdersManagement />} />
+          <Route path="posts" element={<PostsManagement />} />
           <Route path="staffs" element={<StaffManagement />} />
         </Route>
 

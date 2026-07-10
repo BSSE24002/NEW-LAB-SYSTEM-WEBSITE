@@ -192,7 +192,7 @@ export function Header() {
               to="/"
               className="text-3xl font-sans font-black tracking-tighter uppercase relative group"
             >
-              DRAPE<span className="text-red-600">.</span>
+              <img src="/logo.png" alt="NEW LAB SYSTEM" className="h-10 animate-logo" />
             </Link>
           </div>
 
@@ -334,7 +334,7 @@ export function Header() {
           >
             <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100 shrink-0">
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-black tracking-tighter">
-                DRAPE<span className="text-red-600">.</span>
+              <img src="/logo.png" alt="NEW LAB SYSTEM" className="h-8 animate-logo" />
               </Link>
               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 -mr-2 text-xs font-bold tracking-widest uppercase text-gray-400">
                 Close

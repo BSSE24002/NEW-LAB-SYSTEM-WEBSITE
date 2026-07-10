@@ -38,6 +38,7 @@ export function AdminLayout() {
           { name: "Discounts", path: "/admin/discounts", icon: Store },
           { name: "Inventory", path: "/admin/inventory", icon: Package },
           { name: "Orders", path: "/admin/orders", icon: FileText },
+          { name: "Posts", path: "/admin/posts", icon: FileText },
           { name: "Register", path: "/admin/pos", icon: Store },
           { name: "Staff", path: "/admin/staffs", icon: Users },
         ]

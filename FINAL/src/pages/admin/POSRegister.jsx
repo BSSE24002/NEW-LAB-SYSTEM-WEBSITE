@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { usePOS } from "../../context/POSContext";
-import { Search, Plus, Minus, CreditCard, Banknote, RefreshCw, Loader2 } from "lucide-react";
+import { Search, Plus, Minus, Banknote, RefreshCw, Loader2, Building2 } from "lucide-react";
 import { useSocket } from "../../hooks/useSocket";
 import { api } from "../../services/api";
 
@@ -160,10 +160,10 @@ export function POSRegister() {
               className="flex flex-col items-center justify-center gap-2 border border-gray-300 hover:border-black bg-white text-brand-obsidian py-5 rounded-none disabled:opacity-50 transition-colors font-mono font-bold text-xs uppercase">
               <Banknote className="w-5 h-5" />Cash
             </button>
-            <button disabled={items.length === 0 || isProcessing} onClick={() => handleCheckout("card")}
+            <button disabled={items.length === 0 || isProcessing} onClick={() => handleCheckout("bank_transfer")}
               className="flex flex-col items-center justify-center gap-2 bg-brand-obsidian hover:bg-black text-white py-5 rounded-none disabled:opacity-50 transition-colors font-mono font-bold text-xs uppercase">
-              {isProcessing ? <RefreshCw className="w-5 h-5 animate-spin" /> : <CreditCard className="w-5 h-5" />}
-              {isProcessing ? "Processing" : "Card"}
+              {isProcessing ? <RefreshCw className="w-5 h-5 animate-spin" /> : <Building2 className="w-5 h-5" />}
+              {isProcessing ? "Processing" : "Bank Transfer"}
             </button>
           </div>
         </div>

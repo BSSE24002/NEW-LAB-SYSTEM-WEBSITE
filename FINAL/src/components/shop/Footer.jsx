@@ -6,11 +6,11 @@ export function Footer() {
     <footer className="bg-brand-obsidian text-brand-pure-white py-20 px-6 lg:px-12">
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-2">
-          <h2 className="text-4xl font-sans font-black tracking-tighter uppercase mb-6">
-            DRAPE<span className="text-red-500">.</span>
+          <h2 className="text-4xl font-sans font-black tracking-tighter uppercase mb-6 text-white">
+            NEW LAB SYSTEM
           </h2>
           <p className="text-brand-soft-grey text-sm max-w-sm uppercase tracking-widest leading-loose">
-           Redefining modern apparel. Expertly crafted in Pakistan for the uncompromising.
+           Precision Analytical Instruments for Advanced Research and Industry.
           </p>
         </div>
         <div>
@@ -23,23 +23,23 @@ export function Footer() {
                 to="/catalog"
                 className="hover:text-brand-soft-grey transition-colors"
               >
-                Latest Collection
+                Spectrometers
               </Link>
             </li>
             <li>
               <Link
-                to="/catalog"
+                to="/catalog?category=Chromatographs"
                 className="hover:text-brand-soft-grey transition-colors"
               >
-                Core Uniform
+                Chromatographs
               </Link>
             </li>
             <li>
               <Link
-                to="/catalog"
+                to="/catalog?category=Microscopes"
                 className="hover:text-brand-soft-grey transition-colors"
               >
-                Accessories
+                Microscopes
               </Link>
             </li>
             <li>
@@ -94,7 +94,7 @@ export function Footer() {
       </div>
       <div className="max-w-[1400px] mx-auto mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-xs text-brand-soft-grey uppercase tracking-widest">
-          © {new Date().getFullYear()} DRAPE. All Rights Reserved.
+          © {new Date().getFullYear()} NEW LAB SYSTEM. All Rights Reserved.
         </p>
         <div className="flex gap-6 text-xs text-brand-soft-grey uppercase tracking-widest">
           <a href="#" className="hover:text-white transition-colors">

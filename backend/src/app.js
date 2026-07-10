@@ -49,6 +49,9 @@ app.use('/api/customers', customerRoutes);
 app.use('/api/discounts', discountRoutes);
 app.use('/api/coupons', couponRoutes);
 
+const postRoutes = require('./routes/postRoutes');
+app.use('/api/posts', postRoutes);
+
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 

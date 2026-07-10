@@ -10,13 +10,22 @@
   --color-flow-dark-gray: #222222;
 
   --color-brand-pure-white: #ffffff;
-  --color-brand-alabaster: #f4f4f4;
-  --color-brand-obsidian: #1a1a1a;
-  --color-brand-soft-grey: #c2c2c2;
+  --color-brand-alabaster: #f4f8fb;
+  --color-brand-obsidian: #0A2540;
+  --color-brand-soft-grey: #829AB1;
 
   --font-sans: "Inter", system-ui, sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
+}
+
+@keyframes pulseLogo {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-logo {
+  animation: pulseLogo 3s infinite ease-in-out;
 }
 
 @layer base {

@@ -87,8 +87,8 @@ export function Catalog() {
               Collection.
             </h1>
             <p className="text-xl font-medium text-brand-obsidian/60 max-w-2xl">
-              Every garment is designed to outlast trends. Filter below to
-              explore our modular wardrobe essentials.
+              Every instrument is engineered for peak performance. Filter below to
+              explore our analytical solutions.
             </p>
           </ScrollReveal>
 
@@ -176,8 +176,8 @@ export function Catalog() {
                 <PackageX className="w-10 h-10" />
                 <span className="text-sm uppercase tracking-[0.2em] font-bold">
                   {products.length === 0
-                    ? "No products in the store yet."
-                    : "No products in this category."}
+                    ? "No instruments in the lab yet."
+                    : "No instruments in this category."}
                 </span>
               </div>
             )}

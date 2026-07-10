@@ -83,6 +83,10 @@ export const api = {
   createCoupon: (data) => request('POST', '/coupons', data),
   deleteCoupon: (id) => request('DELETE', `/coupons/${id}`),
   validateCoupon: (code) => request('POST', '/coupons/validate', { code }),
+
+  // Posts
+  getPosts: () => request('GET', '/posts'),
+  createPost: (data) => request('POST', '/posts', data),
 };
 
 export default api;

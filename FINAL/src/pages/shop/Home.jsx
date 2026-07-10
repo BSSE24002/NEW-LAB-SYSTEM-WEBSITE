@@ -12,6 +12,7 @@ import { BentoCategories } from "../../components/shop/BentoCategories";
 import { NewArrivalsSection } from "../../components/shop/NewArrivalsSection";
 import { PhilosophyQuote } from "../../components/shop/PhilosophyQuote";
 import { CampaignVideo } from "../../components/shop/CampaignVideo";
+import { PostsSection } from "../../components/shop/PostsSection";
 import { api } from "../../services/api";
 import { Loader2 } from "lucide-react";
 
@@ -34,9 +35,9 @@ export function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
         </motion.div>
         <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 mt-20">
-          <motion.h2 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-brand-soft-grey text-sm uppercase tracking-[0.4em] font-medium mb-6">REDEFINING MODERN BASICS</motion.h2>
-          <ScrambleText text="ELEVATED" className="text-brand-pure-white text-[15vw] md:text-[12vw] leading-none tracking-tighter font-sans font-black uppercase text-center" />
-          <ScrambleText text="ESSENTIALS." className="text-brand-pure-white text-[15vw] md:text-[12vw] leading-none tracking-tighter font-sans font-black uppercase text-center bg-clip-text bg-gradient-to-b from-white to-gray-500" />
+          <motion.h2 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-brand-soft-grey text-sm uppercase tracking-[0.4em] font-medium mb-6">PRECISION ANALYTICAL INSTRUMENTS</motion.h2>
+          <ScrambleText text="ADVANCED" className="text-brand-pure-white text-[15vw] md:text-[12vw] leading-none tracking-tighter font-sans font-black uppercase text-center" />
+          <ScrambleText text="RESEARCH." className="text-brand-pure-white text-[15vw] md:text-[12vw] leading-none tracking-tighter font-sans font-black uppercase text-center bg-clip-text bg-gradient-to-b from-white to-gray-500" />
           <div className="mt-16 flex gap-6">
             <Link to="/catalog"><MagneticButton as="div"><div className="px-10 py-5 bg-white text-black uppercase tracking-[0.2em] text-xs font-bold rounded-full">SHOP COLLECTION</div></MagneticButton></Link>
             <Link to="/about"><MagneticButton as="div"><div className="px-10 py-5 bg-transparent text-white uppercase tracking-[0.2em] text-xs font-bold rounded-full border border-white hover:bg-white/10 transition-all duration-500">OUR PHILOSOPHY</div></MagneticButton></Link>
@@ -52,10 +53,10 @@ export function Home() {
         <motion.div animate={{ x: ["0%", "-50%"] }} transition={{ repeat: Infinity, ease: "linear", duration: 45 }} className="flex whitespace-nowrap gap-12 text-brand-pure-white text-[2rem] md:text-[4rem] font-sans font-black uppercase tracking-tighter w-max leading-none">
           {Array(6).fill(null).map((_, i) => (
             <React.Fragment key={i}>
-              <span className="text-white">FREE SHIPPING OVER PKR 5,999</span>
-              <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>UNCOMPROMISING QUALITY</span>
-              <span className="text-white">LIMITED STOCK</span>
-              <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>PREMIUM FABRICS</span>
+              <span className="text-white">WORLDWIDE SHIPPING</span>
+              <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>CALIBRATED PRECISION</span>
+              <span className="text-white">HIGH ACCURACY</span>
+              <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>LABORATORY GRADE</span>
             </React.Fragment>
           ))}
         </motion.div>
@@ -70,14 +71,14 @@ export function Home() {
       <section className="py-40 bg-brand-pure-white">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <ScrollReveal>
-            <h2 className="text-[3rem] md:text-[5rem] leading-none font-sans font-black tracking-tight uppercase mb-6 text-center">The Pursuit of<br />Perfection.</h2>
-            <p className="text-brand-obsidian/70 text-lg font-medium max-w-2xl mx-auto text-center mb-24">Uncompromising quality starts with the raw materials. We source the heaviest organic cottons and purest textiles to create garments that outlast trends.</p>
+            <h2 className="text-[3rem] md:text-[5rem] leading-none font-sans font-black tracking-tight uppercase mb-6 text-center">The Science of<br />Accuracy.</h2>
+            <p className="text-brand-obsidian/70 text-lg font-medium max-w-2xl mx-auto text-center mb-24">Uncompromising precision starts with superior engineering. We design analytical instruments to deliver data you can trust.</p>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { img: "https://images.unsplash.com/photo-1630512874316-88dcd1925237?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", title: "Heavyweight Origins", desc: "Our signature 300GSM organic cotton provides unmatched structure." },
-              { img: "https://i.pinimg.com/1200x/19/0a/63/190a63ce44054c8b61e1806f5094bab8.jpg", title: "Refined Details", desc: "From subtle embroidered logos to custom-dyed fabrics, every element is meticulously calibrated." },
-              { img: "https://i.pinimg.com/736x/08/77/6c/08776c4c457e8d1268d38e2d50df7b2d.jpg", title: "Masterful Tailoring", desc: "Precision cut and triple-stitched for relaxed, modern silhouettes." },
+              { img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop", title: "Superior Engineering", desc: "Our lab instruments are built for extreme durability." },
+              { img: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop", title: "Precision Optics", desc: "From subtle fluorescence to clear magnification, every element is meticulously calibrated." },
+              { img: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=800&auto=format&fit=crop", title: "Automated Data", desc: "Precision software integration for relaxed, modern workflows." },
             ].map(({ img, title, desc }) => (
               <ScrollReveal key={title}><div className="group cursor-pointer"><div className="aspect-[4/5] bg-brand-alabaster relative overflow-hidden mb-6 rounded-2xl"><img loading="lazy" src={img} className="w-full h-full object-cover grayscale opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" /></div><h3 className="text-xl font-black uppercase tracking-widest mb-2">{title}</h3><p className="text-sm text-brand-obsidian/60 font-medium leading-relaxed">{desc}</p></div></ScrollReveal>
             ))}
@@ -86,13 +87,14 @@ export function Home() {
       </section>
 
       <StackedImageSection />
+      <PostsSection />
       <AccordionGallery />
 
       <section className="max-w-[1400px] mx-auto px-6 lg:px-12 py-40">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
           <div>
             <ScrambleText text="THE COLLECTION." className="text-[3rem] md:text-[5rem] leading-none font-sans font-black tracking-tight mb-6" />
-            <p className="text-brand-obsidian/70 text-lg md:text-xl font-medium max-w-lg">Everyday staples re-engineered for the modern silhouette.</p>
+            <p className="text-brand-obsidian/70 text-lg md:text-xl font-medium max-w-lg">Advanced systems engineered for the modern laboratory.</p>
           </div>
           <Link to="/catalog" className="group flex items-center gap-2 text-sm uppercase font-black tracking-widest border-b-2 border-transparent hover:border-brand-obsidian pb-1 transition-colors">Explore All <span className="group-hover:translate-x-1 transition-transform">-&gt;</span></Link>
         </div>
@@ -116,7 +118,7 @@ export function Home() {
         <div className="relative z-10 w-full max-w-2xl mx-auto px-6 text-center text-brand-pure-white">
           <ScrollReveal>
             <h2 className="text-4xl md:text-6xl font-sans font-black tracking-tighter uppercase mb-6">Join The Inner Circle.</h2>
-            <p className="text-brand-soft-grey font-medium mb-12 text-sm tracking-widest uppercase leading-loose max-w-lg mx-auto">Unlock early access to our limited capsule drops and exclusive community events.</p>
+            <p className="text-brand-soft-grey font-medium mb-12 text-sm tracking-widest uppercase leading-loose max-w-lg mx-auto">Unlock early access to our newest instrument launches and exclusive webinars.</p>
             <form className="flex flex-col md:flex-row gap-6 items-center border-b border-brand-soft-grey/30 pb-4" onSubmit={(e) => e.preventDefault()}>
               <input type="email" placeholder="EMAIL ADDRESS" className="flex-1 w-full bg-transparent p-2 text-sm font-bold tracking-[0.2em] uppercase focus:outline-none placeholder:text-brand-soft-grey/50" />
               <button className="text-xs font-bold tracking-[0.2em] uppercase hover:text-brand-soft-grey transition-colors shrink-0">Subscribe</button>
@@ -130,7 +132,7 @@ export function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="order-2 lg:order-1 flex flex-col items-start gap-8">
               <h2 className="text-[3rem] md:text-[4rem] leading-none font-sans font-black tracking-tight uppercase">Our Ethos</h2>
-              <p className="text-brand-obsidian/70 text-lg leading-relaxed max-w-xl font-medium">In a world of excess, we choose intentionality. DRAPE is built on the belief that a wardrobe should be a curated collection of heavy-hitting essentials.</p>
+              <p className="text-brand-obsidian/70 text-lg leading-relaxed max-w-xl font-medium">In a world of complex data, we choose accuracy. NEW LAB SYSTEM is built on the belief that a laboratory should be a curated collection of precise instruments.</p>
               <Link to="/about" className="group flex items-center gap-2 text-sm uppercase font-black tracking-widest border-b-2 border-transparent hover:border-brand-obsidian pb-1 transition-colors mt-4">Discover Our Process <span className="group-hover:translate-x-1 transition-transform">-&gt;</span></Link>
             </div>
             <div className="order-1 lg:order-2 grid grid-cols-2 gap-4">
@@ -155,7 +157,7 @@ export function Home() {
         <div className="relative z-10">
           <ScrollReveal>
             <h2 className="text-[3.5rem] md:text-[6rem] leading-none font-sans font-black tracking-tighter uppercase mb-2">Upgrade Your</h2>
-            <h2 className="text-[3.5rem] md:text-[6rem] leading-none font-sans font-black tracking-tighter uppercase mb-12 text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,1)" }}>Uniform.</h2>
+            <h2 className="text-[3.5rem] md:text-[6rem] leading-none font-sans font-black tracking-tighter uppercase mb-12 text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,1)" }}>Laboratory.</h2>
             <Link to="/catalog"><MagneticButton as="div"><div className="px-14 py-6 bg-white text-brand-obsidian uppercase tracking-[0.2em] text-sm font-bold rounded-full hover:scale-105 transition-transform duration-500 hover:bg-gray-200">Shop Collection</div></MagneticButton></Link>
           </ScrollReveal>
         </div>
