@@ -5,10 +5,13 @@ import { useCart } from "../../context/CartContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import { LoginModal } from "./LoginModal";
+import { api } from "../../services/api";
 
 export function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [discounts, setDiscounts] = useState([]);
   const { items, setIsCartOpen } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,6 +30,12 @@ export function Header() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    // Fetch data for mega menu
+    api.getCategories().then((data) => setCategories(data)).catch(() => {});
+    api.getDiscounts().then((data) => setDiscounts(data.filter(d => d.active))).catch(() => {});
   }, []);
 
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
@@ -67,39 +76,46 @@ export function Header() {
                   <div className={styles.megaMenuColumn}>
                     <h3 className={styles.megaMenuTitle}>Categories</h3>
                     <ul className={styles.megaMenuList}>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          New Arrivals
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          Tops &amp; Tees
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          Knitwear
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          Bottoms
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          Outerwear
-                        </Link>
-                      </li>
+                      {categories.length > 0 ? (
+                        categories.map((cat) => (
+                          <li key={cat.id}>
+                            <Link to={`/catalog?category=${cat.name}`} className={styles.megaMenuLink}>
+                              {cat.name}
+                            </Link>
+                          </li>
+                        ))
+                      ) : (
+                        <li>
+                          <Link to="/catalog" className={styles.megaMenuLink}>View All</Link>
+                        </li>
+                      )}
                     </ul>
                   </div>
                   <div className={styles.megaMenuColumn}>
-                    <h3 className={styles.megaMenuTitle}>Collections</h3>
+                    <h3 className={styles.megaMenuTitle}>Offers & Discounts</h3>
+                    <ul className={styles.megaMenuList}>
+                      {discounts.length > 0 ? (
+                        discounts.map((discount) => (
+                          <li key={discount.id}>
+                            <Link to="/catalog" className={`${styles.megaMenuLink} text-red-500 font-bold`}>
+                              {discount.type === 'percentage' ? `${discount.value}% OFF` : `PKR ${discount.value} OFF`} 
+                              {discount.target === 'all' ? ' Everything' : discount.target === 'category' ? ` on ${discount.target_value}` : ''}
+                            </Link>
+                          </li>
+                        ))
+                      ) : (
+                        <li>
+                          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">No active offers</span>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                  <div className={styles.megaMenuColumn}>
+                    <h3 className={styles.megaMenuTitle}>Collections & Tags</h3>
                     <ul className={styles.megaMenuList}>
                       <li>
                         <Link to="/catalog" className={styles.megaMenuLink}>
-                          Spring/Summer 2026
+                          Summer Collection
                         </Link>
                       </li>
                       <li>
@@ -109,7 +125,12 @@ export function Header() {
                       </li>
                       <li>
                         <Link to="/catalog" className={styles.megaMenuLink}>
-                          Accessories
+                          Heavyweight Cotton
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/catalog" className={styles.megaMenuLink}>
+                          Best Sellers
                         </Link>
                       </li>
                     </ul>
