@@ -12,6 +12,7 @@ export function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
   const [discounts, setDiscounts] = useState([]);
@@ -79,7 +80,7 @@ export function Header() {
       >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between relative">
           <div className="flex items-center gap-8">
-            <button className="p-2 -ml-2 block md:hidden">
+            <button className="p-2 -ml-2 block md:hidden" onClick={() => setIsMobileMenuOpen(true)}>
               <Menu className="w-5 h-5" />
             </button>
 
@@ -317,6 +318,65 @@ export function Header() {
             <p className="mt-auto mb-10 text-xs font-medium text-white/30 tracking-[0.3em] uppercase">
               Press Enter to view all results
             </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: "-100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "-100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 bg-brand-pure-white z-[110] flex flex-col"
+          >
+            <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100 shrink-0">
+              <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-black tracking-tighter">
+                DRAPE<span className="text-red-600">.</span>
+              </Link>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 -mr-2 text-xs font-bold tracking-widest uppercase text-gray-400">
+                Close
+              </button>
+            </div>
+            <nav className="flex-1 overflow-y-auto py-8 px-6 flex flex-col gap-6">
+              <Link to="/catalog" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-black tracking-tighter uppercase">Shop All</Link>
+              
+              {categories.length > 0 && (
+                <div className="flex flex-col gap-4 pl-4 border-l-2 border-gray-100">
+                  {categories.map(cat => (
+                    <Link 
+                      key={cat.id}
+                      to={`/catalog?category=${cat.name}`} 
+                      onClick={() => setIsMobileMenuOpen(false)} 
+                      className="text-sm font-bold tracking-widest uppercase text-gray-500"
+                    >
+                      {cat.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              
+              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-black tracking-tighter uppercase">About</Link>
+              <Link to="/track-order" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-black tracking-tighter uppercase">Track Order</Link>
+              
+              <div className="mt-8 pt-8 border-t border-gray-100 flex flex-col gap-6">
+                <button 
+                  onClick={() => { setIsMobileMenuOpen(false); handleUserClick(); }} 
+                  className="flex items-center gap-4 text-sm font-bold tracking-widest uppercase"
+                >
+                  <User className="w-5 h-5" /> 
+                  {role === "admin" || role === "staff" ? "Portal" : role === "customer" ? "Profile" : "Login"}
+                </button>
+                <button 
+                  onClick={() => { setIsMobileMenuOpen(false); setIsSearchOpen(true); }}
+                  className="flex items-center gap-4 text-sm font-bold tracking-widest uppercase"
+                >
+                  <Search className="w-5 h-5" /> Search
+                </button>
+              </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
