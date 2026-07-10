@@ -2,8 +2,11 @@
 // Using native fetch so no extra dependencies are needed.
 
 // In production: VITE_API_BASE_URL points to the deployed Vercel backend
-// In local dev: falls back to '/api' which Vite proxy forwards to localhost:5000
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+// Fallback: hardcoded backend URL so the app works even without env var
+// In local dev: Vite proxy forwards '/api' to localhost:5000
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? '/api' : 'https://flow-backend-psi.vercel.app/api');
 
 async function request(method, path, body) {
   const options = {
