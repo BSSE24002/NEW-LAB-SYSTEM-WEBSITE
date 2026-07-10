@@ -28,14 +28,13 @@ const CATEGORIES = [
 ];
 
 const BRANDS = [
-  { name: "HANNA instruments", img: "" },
-  { name: "WILLE55", img: "" },
-  { name: "GroLine", img: "" },
-  { name: "Marine Line", img: "" },
-  { name: "Pool Line", img: "" },
-  { name: "HALO 2", img: "" },
-  { name: "edge", img: "" },
-  { name: "Checker HC", img: "" }
+  { name: "HANNA instruments", img: "https://cdn2.hubspot.net/hubfs/2134380/Hanna-Logo-Blue-2023.png?width=140&height=44&name=Hanna-Logo-Blue-2023.png" },
+  { name: "WILLE55", img: "https://www.wile.fi/wp-content/themes/farmcomp/assets/wile-logo.svg" },
+  { name: "GroLine", img: "https://www.groline.com/we/we.dll/Pic?UN=20747&F=C&T=801&Age=1512596728" },
+  { name: "Pyrex Glassware", img: "https://www.corning.com/etc.clientlibs/settings/wcm/designs/corning/resources/images/global/logo-glass-bg.png" },
+  { name: "Sigma", img: "https://th.bing.com/th/id/R.fd27f2806c4d7c4d86ccfbc3f27f0494?rik=ivH1iwsQUl5WEA&riu=http%3a%2f%2frndmate.com%2fcdn%2fshop%2fcollections%2fmilliporesigma-logo.png%3fv%3d1705792684&ehk=ly5xVIlPu1u5T7%2bxRrhrfAT0XDINLaWbRes7pRX34Uk%3d&risl=&pid=ImgRaw&r=0" },
+  { name: "Merck", img: "https://www.sigmaaldrich.com/static/logos/purple/merck.svg" },
+  { name: "VWR", img: "https://occapi.avantorsciences.com/medias/vwr-part-of-avantor-logo.svg?context=bWFzdGVyfGltYWdlc3w1ODI1fGltYWdlL3N2Zyt4bWx8YUdWaEwyZzFaQzh4TURNNE16Z3hPVFUzTVRJek1DOTJkM0l0Y0dGeWRDMXZaaTFoZG1GdWRHOXlMV3h2WjI4dWMzWm58MTYzNTM4ZGQwNzhhZDQ4NjNjYTEzOWZkZTQzNWZhNGU4YTgzZTEyMGE3Y2Y3MGMzMjRkYWY4YjVhOWY3OTUxYg" }
 ];
 
 const INDUSTRIES = [
