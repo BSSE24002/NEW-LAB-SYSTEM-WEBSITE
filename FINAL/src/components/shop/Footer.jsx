@@ -58,36 +58,36 @@ export function Footer() {
           </h4>
           <ul className="space-y-4 text-sm font-medium uppercase tracking-widest">
             <li>
-              <a
-                href="#"
+              <Link
+                to="/shipping-returns"
                 className="hover:text-brand-soft-grey transition-colors"
               >
                 Shipping &amp; Returns
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/size-guide"
                 className="hover:text-brand-soft-grey transition-colors"
               >
                 Size Guide
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/contact"
                 className="hover:text-brand-soft-grey transition-colors"
               >
                 Contact Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/faq"
                 className="hover:text-brand-soft-grey transition-colors"
               >
                 FAQ
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

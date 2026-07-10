@@ -19,6 +19,10 @@ import { Checkout } from "./pages/shop/Checkout";
 import { CardPayment } from "./pages/shop/CardPayment";
 import { OrderConfirmation } from "./pages/shop/OrderConfirmation";
 import { TrackOrder } from "./pages/shop/TrackOrder";
+import { ShippingReturns } from "./pages/shop/ShippingReturns";
+import { SizeGuide } from "./pages/shop/SizeGuide";
+import { ContactUs } from "./pages/shop/ContactUs";
+import { FAQ } from "./pages/shop/FAQ";
 
 export default function App() {
   return (
@@ -35,6 +39,10 @@ export default function App() {
           <Route path="checkout/card" element={<CardPayment />} />
           <Route path="checkout/confirmation" element={<OrderConfirmation />} />
           <Route path="track-order" element={<TrackOrder />} />
+          <Route path="shipping-returns" element={<ShippingReturns />} />
+          <Route path="size-guide" element={<SizeGuide />} />
+          <Route path="contact" element={<ContactUs />} />
+          <Route path="faq" element={<FAQ />} />
         </Route>
 
         {/* Admin/Staff Facing routes */}
