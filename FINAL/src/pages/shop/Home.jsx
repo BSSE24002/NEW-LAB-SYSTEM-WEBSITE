@@ -154,7 +154,7 @@ export function Home() {
                 {BRANDS.map((brand, j) => (
                   <div key={j} className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center p-4">
                      {brand.img.includes('http') ? (
-                       <img src={brand.img} alt={brand.name} className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all opacity-80 hover:opacity-100" />
+                       <img src={brand.img} alt={brand.name} className="max-w-full max-h-full object-contain transition-transform hover:scale-105" />
                      ) : (
                        <span className="text-[#0056b3] font-black text-xl">{brand.name}</span>
                      )}
