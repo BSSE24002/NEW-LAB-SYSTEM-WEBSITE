@@ -90,7 +90,17 @@ function CartDrawer() {
                         key={`${item.id}-${item.size}-${item.color}`}
                         className="flex gap-6"
                       >
-                        <div className="w-24 h-32 bg-brand-alabaster flex-shrink-0" />
+                        <div className="w-24 h-32 bg-brand-alabaster flex-shrink-0 overflow-hidden">
+                          {item.thumbnail_url ? (
+                            <img
+                              src={item.thumbnail_url}
+                              alt={item.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-brand-alabaster" />
+                          )}
+                        </div>
                         <div className="flex-1 flex flex-col justify-between py-1">
                           <div>
                             <div className="flex justify-between items-start">
