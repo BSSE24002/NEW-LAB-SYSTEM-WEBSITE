@@ -278,7 +278,13 @@ export function Header() {
                     exit={{ opacity: 0, y: -10 }}
                     className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"
                   >
-                    {liveSearchResults.map(product => (
+                    {liveSearchResults.map(product => {
+                      const gallery = Array.isArray(product.gallery_urls) 
+                        ? product.gallery_urls 
+                        : (typeof product.gallery_urls === 'string' ? JSON.parse(product.gallery_urls || "[]") : []);
+                      const imgUrl = product.thumbnail_url || gallery[0];
+                      
+                      return (
                       <Link 
                         key={product.id} 
                         to={`/product/${product.id}`}
@@ -286,8 +292,8 @@ export function Header() {
                         className="group flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 transition-colors"
                       >
                         <div className="w-20 h-24 bg-white/5 rounded-lg overflow-hidden shrink-0">
-                          {product.image_url ? (
-                            <img src={product.image_url} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          {imgUrl ? (
+                            <img src={imgUrl} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                           ) : (
                             <div className="w-full h-full bg-white/10" />
                           )}
@@ -297,7 +303,7 @@ export function Header() {
                           <p className="text-white/50 text-xs font-mono font-medium">PKR {product.price}</p>
                         </div>
                       </Link>
-                    ))}
+                    )})}
                   </motion.div>
                 )}
               </AnimatePresence>
