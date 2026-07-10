@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { InstrumentReveal } from "../../components/shop/InstrumentReveal";
-import { ProductCard } from "../../components/shop/ProductCard";
-import { ScrambleText } from "../../components/shop/ScrambleText";
-import { MagneticButton } from "../../components/shop/MagneticButton";
 import { Link } from "react-router-dom";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { ScrollReveal } from "../../components/shop/ScrollReveal";
-import { AccordionGallery } from "../../components/shop/AccordionGallery";
-import { StackedImageSection } from "../../components/shop/StackedImageSection";
-import { BentoCategories } from "../../components/shop/BentoCategories";
-import { NewArrivalsSection } from "../../components/shop/NewArrivalsSection";
-import { PhilosophyQuote } from "../../components/shop/PhilosophyQuote";
-import { CampaignVideo } from "../../components/shop/CampaignVideo";
-import { PostsSection } from "../../components/shop/PostsSection";
+import { ProductCard } from "../../components/shop/ProductCard";
 import { api } from "../../services/api";
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowRight, Activity, Cpu, Database, ShieldCheck } from "lucide-react";
 
 export function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
     api
@@ -27,141 +18,273 @@ export function Home() {
       .catch(() => setFeaturedProducts([]))
       .finally(() => setLoadingFeatured(false));
   }, []);
+
+  const TABS = [
+    {
+      title: "Spectrometry",
+      desc: "High-resolution mass and optical spectrometry systems engineered for precise molecular analysis at the nanogram level.",
+      img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop",
+      specs: ["Mass Range: 10-2000 m/z", "Resolution: >100,000", "Scan Rate: 50 Hz"]
+    },
+    {
+      title: "Microscopy",
+      desc: "Advanced scanning electron and confocal microscopes offering unprecedented clarity and sub-nanometer resolution.",
+      img: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=1600&auto=format&fit=crop",
+      specs: ["Resolution: 0.8nm", "Magnification: 1,000,000x", "Detector: In-lens SE"]
+    },
+    {
+      title: "Chromatography",
+      desc: "Automated gas and liquid chromatography platforms designed for rapid, high-throughput volatile compound separation.",
+      img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1600&auto=format&fit=crop",
+      specs: ["Pressure: up to 15,000 psi", "Flow Rate: 0.001 - 10 mL/min", "Oven Temp: 450°C"]
+    }
+  ];
+
   return (
-    <div className="bg-brand-pure-white text-brand-obsidian">
-      <section className="relative h-[100svh] bg-black overflow-hidden flex items-center justify-center">
-        <motion.div initial={{ scale: 1.1, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }} className="absolute inset-0">
-          <img fetchpriority="high" src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=1631&auto=format&fit=crop" alt="Hero Campaign" className="w-full h-full object-cover opacity-70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-        </motion.div>
-        <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 mt-20">
-          <motion.h2 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-brand-soft-grey text-sm uppercase tracking-[0.4em] font-medium mb-6">PRECISION ANALYTICAL INSTRUMENTS</motion.h2>
-          <ScrambleText text="ADVANCED" className="text-brand-pure-white text-[15vw] md:text-[12vw] leading-none tracking-tighter font-sans font-black uppercase text-center" />
-          <ScrambleText text="RESEARCH." className="text-brand-pure-white text-[15vw] md:text-[12vw] leading-none tracking-tighter font-sans font-black uppercase text-center bg-clip-text bg-gradient-to-b from-white to-gray-500" />
-          <div className="mt-16 flex gap-6">
-            <Link to="/catalog"><MagneticButton as="div"><div className="px-10 py-5 bg-white text-black uppercase tracking-[0.2em] text-xs font-bold rounded-full">SHOP COLLECTION</div></MagneticButton></Link>
-            <Link to="/about"><MagneticButton as="div"><div className="px-10 py-5 bg-transparent text-white uppercase tracking-[0.2em] text-xs font-bold rounded-full border border-white hover:bg-white/10 transition-all duration-500">OUR PHILOSOPHY</div></MagneticButton></Link>
-          </div>
+    <div className="bg-brand-pure-white text-brand-obsidian font-sans">
+      
+      {/* 1. Split-Screen Hero */}
+      <section className="relative min-h-[100svh] flex flex-col lg:flex-row pt-20">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 lg:px-20 py-20 z-10 bg-brand-pure-white">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <div className="flex items-center gap-2 mb-6">
+              <span className="w-8 h-[2px] bg-brand-obsidian"></span>
+              <span className="text-xs uppercase tracking-widest font-bold text-brand-obsidian/70">New Lab System</span>
+            </div>
+            <h1 className="text-[4rem] lg:text-[6rem] leading-[0.9] font-black uppercase tracking-tighter mb-8 text-brand-obsidian">
+              Next-Gen<br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-400">Analytics.</span>
+            </h1>
+            <p className="text-lg text-brand-obsidian/70 font-medium max-w-md leading-relaxed mb-12">
+              Equip your laboratory with industry-leading precision instruments. Engineered for automated workflows, robust compliance, and absolute data integrity.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/catalog" className="flex items-center justify-center gap-2 px-8 py-4 bg-brand-obsidian text-white uppercase text-xs font-bold tracking-widest hover:bg-blue-600 transition-colors">
+                Explore Catalog <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link to="/contact" className="flex items-center justify-center px-8 py-4 bg-transparent border border-brand-obsidian text-brand-obsidian uppercase text-xs font-bold tracking-widest hover:bg-brand-alabaster transition-colors">
+                Request Demo
+              </Link>
+            </div>
+          </motion.div>
         </div>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 1 }} className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <span className="text-[9px] text-white/50 tracking-[0.4em] uppercase font-bold">Scroll</span>
-          <div className="w-px h-12 bg-white/20 relative overflow-hidden"><motion.div animate={{ y: ["-100%", "100%"] }} transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }} className="absolute inset-0 bg-white" /></div>
-        </motion.div>
+        <div className="w-full lg:w-1/2 relative h-[50vh] lg:h-auto overflow-hidden bg-brand-obsidian">
+          <motion.img 
+            initial={{ scale: 1.1, opacity: 0 }} 
+            animate={{ scale: 1, opacity: 0.8 }} 
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=1600&auto=format&fit=crop" 
+            alt="Hero Instrument" 
+            className="absolute inset-0 w-full h-full object-cover mix-blend-luminosity opacity-80"
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-brand-pure-white/20 lg:hidden" />
+        </div>
       </section>
 
-      <section className="bg-brand-obsidian py-6 md:py-8 border-y flex overflow-hidden relative">
-        <motion.div animate={{ x: ["0%", "-50%"] }} transition={{ repeat: Infinity, ease: "linear", duration: 45 }} className="flex whitespace-nowrap gap-12 text-brand-pure-white text-[2rem] md:text-[4rem] font-sans font-black uppercase tracking-tighter w-max leading-none">
-          {Array(6).fill(null).map((_, i) => (
+      {/* 2. Industries Served Marquee */}
+      <section className="bg-brand-alabaster py-6 border-y border-brand-obsidian/10 overflow-hidden flex">
+        <motion.div 
+          animate={{ x: ["0%", "-50%"] }} 
+          transition={{ repeat: Infinity, ease: "linear", duration: 30 }} 
+          className="flex whitespace-nowrap gap-16 text-brand-obsidian/40 text-sm font-bold uppercase tracking-[0.3em] w-max"
+        >
+          {Array(8).fill(null).map((_, i) => (
             <React.Fragment key={i}>
-              <span className="text-white">WORLDWIDE SHIPPING</span>
-              <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>CALIBRATED PRECISION</span>
-              <span className="text-white">HIGH ACCURACY</span>
-              <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>LABORATORY GRADE</span>
+              <span>Pharmaceuticals</span>
+              <span>•</span>
+              <span>Biotechnology</span>
+              <span>•</span>
+              <span>Material Science</span>
+              <span>•</span>
+              <span>Clinical Diagnostics</span>
+              <span>•</span>
             </React.Fragment>
           ))}
         </motion.div>
       </section>
 
-      <NewArrivalsSection />
-      <BentoCategories />
-      <PhilosophyQuote />
-      <InstrumentReveal />
-      <CampaignVideo />
-
-      <section className="py-40 bg-brand-pure-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <ScrollReveal>
-            <h2 className="text-[3rem] md:text-[5rem] leading-none font-sans font-black tracking-tight uppercase mb-6 text-center">The Science of<br />Accuracy.</h2>
-            <p className="text-brand-obsidian/70 text-lg font-medium max-w-2xl mx-auto text-center mb-24">Uncompromising precision starts with superior engineering. We design analytical instruments to deliver data you can trust.</p>
-          </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop", title: "Superior Engineering", desc: "Our lab instruments are built for extreme durability." },
-              { img: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop", title: "Precision Optics", desc: "From subtle fluorescence to clear magnification, every element is meticulously calibrated." },
-              { img: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=800&auto=format&fit=crop", title: "Automated Data", desc: "Precision software integration for relaxed, modern workflows." },
-            ].map(({ img, title, desc }) => (
-              <ScrollReveal key={title}><div className="group cursor-pointer"><div className="aspect-[4/5] bg-brand-alabaster relative overflow-hidden mb-6 rounded-2xl"><img loading="lazy" src={img} className="w-full h-full object-cover grayscale opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" /></div><h3 className="text-xl font-black uppercase tracking-widest mb-2">{title}</h3><p className="text-sm text-brand-obsidian/60 font-medium leading-relaxed">{desc}</p></div></ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <StackedImageSection />
-      <PostsSection />
-      <AccordionGallery />
-
-      <section className="max-w-[1400px] mx-auto px-6 lg:px-12 py-40">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
-          <div>
-            <ScrambleText text="THE COLLECTION." className="text-[3rem] md:text-[5rem] leading-none font-sans font-black tracking-tight mb-6" />
-            <p className="text-brand-obsidian/70 text-lg md:text-xl font-medium max-w-lg">Advanced systems engineered for the modern laboratory.</p>
-          </div>
-          <Link to="/catalog" className="group flex items-center gap-2 text-sm uppercase font-black tracking-widest border-b-2 border-transparent hover:border-brand-obsidian pb-1 transition-colors">Explore All <span className="group-hover:translate-x-1 transition-transform">-&gt;</span></Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-            {loadingFeatured ? (
-              <div className="col-span-4 flex items-center justify-center py-16 text-brand-obsidian/30 gap-3">
-                <Loader2 className="w-6 h-6 animate-spin" />
-                <span className="text-xs uppercase tracking-widest font-bold">Loading...</span>
-              </div>
-            ) : featuredProducts.length > 0 ? (
-              featuredProducts.map((p) => <ProductCard key={p.id} product={p} />)
-            ) : (
-              <div className="col-span-4 text-center py-16 text-brand-obsidian/30 text-xs uppercase tracking-widest font-bold">
-                No products available
-              </div>
-            )}
-          </div>
-      </section>
-
-      <section className="py-40 bg-brand-obsidian relative overflow-hidden flex items-center justify-center">
-        <div className="relative z-10 w-full max-w-2xl mx-auto px-6 text-center text-brand-pure-white">
-          <ScrollReveal>
-            <h2 className="text-4xl md:text-6xl font-sans font-black tracking-tighter uppercase mb-6">Join The Inner Circle.</h2>
-            <p className="text-brand-soft-grey font-medium mb-12 text-sm tracking-widest uppercase leading-loose max-w-lg mx-auto">Unlock early access to our newest instrument launches and exclusive webinars.</p>
-            <form className="flex flex-col md:flex-row gap-6 items-center border-b border-brand-soft-grey/30 pb-4" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder="EMAIL ADDRESS" className="flex-1 w-full bg-transparent p-2 text-sm font-bold tracking-[0.2em] uppercase focus:outline-none placeholder:text-brand-soft-grey/50" />
-              <button className="text-xs font-bold tracking-[0.2em] uppercase hover:text-brand-soft-grey transition-colors shrink-0">Subscribe</button>
-            </form>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <section className="py-40 bg-brand-alabaster">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="order-2 lg:order-1 flex flex-col items-start gap-8">
-              <h2 className="text-[3rem] md:text-[4rem] leading-none font-sans font-black tracking-tight uppercase">Our Ethos</h2>
-              <p className="text-brand-obsidian/70 text-lg leading-relaxed max-w-xl font-medium">In a world of complex data, we choose accuracy. NEW LAB SYSTEM is built on the belief that a laboratory should be a curated collection of precise instruments.</p>
-              <Link to="/about" className="group flex items-center gap-2 text-sm uppercase font-black tracking-widest border-b-2 border-transparent hover:border-brand-obsidian pb-1 transition-colors mt-4">Discover Our Process <span className="group-hover:translate-x-1 transition-transform">-&gt;</span></Link>
+      {/* 3. Technical Capabilities (Tabbed Interface) */}
+      <section className="py-32 max-w-[1400px] mx-auto px-6 lg:px-12">
+        <ScrollReveal>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div>
+              <h2 className="text-[2.5rem] md:text-[4rem] font-black uppercase tracking-tighter leading-none mb-4">Core Capabilities.</h2>
+              <p className="text-brand-obsidian/60 max-w-lg font-medium">Discover our specialized product lines designed to meet the rigorous demands of modern analytical science.</p>
             </div>
-            <div className="order-1 lg:order-2 grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-4 pt-12">
-                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=800&auto=format&fit=crop" className="w-full h-[400px] object-cover rounded-2xl" alt="Instrument 1" /></ScrollReveal>
-                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800&auto=format&fit=crop" className="w-full h-[300px] object-cover rounded-2xl" alt="Lab 1" /></ScrollReveal>
-              </div>
-              <div className="flex flex-col gap-4">
-                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop" className="w-full h-[300px] object-cover rounded-2xl" alt="Instrument 2" /></ScrollReveal>
-                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=800&auto=format&fit=crop" className="w-full h-[400px] object-cover rounded-2xl" alt="Lab 2" /></ScrollReveal>
-              </div>
+            <div className="flex gap-4 border-b border-brand-obsidian/10 w-full md:w-auto">
+              {TABS.map((tab, idx) => (
+                <button 
+                  key={idx}
+                  onClick={() => setActiveTab(idx)}
+                  className={`pb-4 text-xs font-bold uppercase tracking-widest transition-colors relative ${activeTab === idx ? 'text-brand-obsidian' : 'text-brand-obsidian/40 hover:text-brand-obsidian/70'}`}
+                >
+                  {tab.title}
+                  {activeTab === idx && (
+                    <motion.div layoutId="tab-indicator" className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-600" />
+                  )}
+                </button>
+              ))}
             </div>
           </div>
+        </ScrollReveal>
+
+        <div className="bg-brand-alabaster rounded-3xl overflow-hidden min-h-[500px] flex flex-col md:flex-row relative">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={activeTab}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+              className="w-full md:w-1/2 p-12 lg:p-20 flex flex-col justify-center"
+            >
+              <h3 className="text-3xl font-black uppercase tracking-tight mb-6">{TABS[activeTab].title}</h3>
+              <p className="text-brand-obsidian/70 leading-relaxed mb-10">{TABS[activeTab].desc}</p>
+              <div className="space-y-4 mb-10">
+                {TABS[activeTab].specs.map((spec, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <ShieldCheck className="w-5 h-5 text-blue-600" />
+                    <span className="text-sm font-bold tracking-widest uppercase">{spec}</span>
+                  </div>
+                ))}
+              </div>
+              <Link to={`/catalog?category=${TABS[activeTab].title}`} className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">
+                View Instruments <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="w-full md:w-1/2 relative h-[300px] md:h-auto overflow-hidden">
+             <AnimatePresence mode="wait">
+               <motion.img 
+                  key={activeTab}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  src={TABS[activeTab].img}
+                  className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-90"
+               />
+             </AnimatePresence>
+          </div>
         </div>
       </section>
 
-      <section className="relative py-48 bg-black text-brand-pure-white overflow-hidden flex flex-col items-center justify-center text-center px-6">
-        <div className="absolute inset-0 opacity-40">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1542406859-a5c9aa4be2ba?q=80&w=2500&auto=format&fit=crop" alt="Footer" className="w-full h-full object-cover grayscale" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/80" />
-        </div>
-        <div className="relative z-10">
-          <ScrollReveal>
-            <h2 className="text-[3.5rem] md:text-[6rem] leading-none font-sans font-black tracking-tighter uppercase mb-2">Upgrade Your</h2>
-            <h2 className="text-[3.5rem] md:text-[6rem] leading-none font-sans font-black tracking-tighter uppercase mb-12 text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,1)" }}>Laboratory.</h2>
-            <Link to="/catalog"><MagneticButton as="div"><div className="px-14 py-6 bg-white text-brand-obsidian uppercase tracking-[0.2em] text-sm font-bold rounded-full hover:scale-105 transition-transform duration-500 hover:bg-gray-200">Shop Collection</div></MagneticButton></Link>
-          </ScrollReveal>
+      {/* 4. "Inside the Engineering" Feature */}
+      <section className="bg-brand-obsidian text-brand-pure-white py-32 relative overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+           <ScrollReveal>
+             <div className="text-center mb-20">
+               <h2 className="text-[3rem] md:text-[5rem] font-black uppercase tracking-tighter leading-none mb-6">Engineered for<br/>Absolute Certainty.</h2>
+               <p className="text-brand-soft-grey max-w-2xl mx-auto text-lg">Every instrument is constructed with industrial-grade materials and integrated with smart telemetry for real-time performance monitoring.</p>
+             </div>
+           </ScrollReveal>
+           
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center mt-12">
+             <ScrollReveal>
+               <div className="flex flex-col items-center">
+                 <div className="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center mb-6">
+                   <Activity className="w-8 h-8 text-blue-400" />
+                 </div>
+                 <h4 className="text-xl font-bold uppercase tracking-widest mb-4">High Sensitivity</h4>
+                 <p className="text-brand-soft-grey/80 text-sm leading-relaxed">Achieve sub-part-per-trillion detection limits with our proprietary signal enhancement technology.</p>
+               </div>
+             </ScrollReveal>
+             <ScrollReveal>
+               <div className="flex flex-col items-center">
+                 <div className="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center mb-6">
+                   <Cpu className="w-8 h-8 text-blue-400" />
+                 </div>
+                 <h4 className="text-xl font-bold uppercase tracking-widest mb-4">Automated Workflows</h4>
+                 <p className="text-brand-soft-grey/80 text-sm leading-relaxed">Reduce manual errors with robotic sample handling and AI-driven predictive maintenance.</p>
+               </div>
+             </ScrollReveal>
+             <ScrollReveal>
+               <div className="flex flex-col items-center">
+                 <div className="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center mb-6">
+                   <Database className="w-8 h-8 text-blue-400" />
+                 </div>
+                 <h4 className="text-xl font-bold uppercase tracking-widest mb-4">Data Integrity</h4>
+                 <p className="text-brand-soft-grey/80 text-sm leading-relaxed">Built-in 21 CFR Part 11 compliance with encrypted audit trails and secure cloud backups.</p>
+               </div>
+             </ScrollReveal>
+           </div>
         </div>
       </section>
+
+      {/* 5. Featured Instruments Grid */}
+      <section className="py-32 max-w-[1400px] mx-auto px-6 lg:px-12">
+        <ScrollReveal>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <h2 className="text-[2.5rem] md:text-[4rem] font-black uppercase tracking-tighter leading-none mb-4">Featured Systems.</h2>
+              <p className="text-brand-obsidian/60 max-w-lg font-medium">Explore our flagship analytical instruments currently leading the industry in precision.</p>
+            </div>
+            <Link to="/catalog" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-brand-obsidian pb-1 hover:text-blue-600 hover:border-blue-600 transition-colors">
+              View Entire Catalog <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {loadingFeatured ? (
+            <div className="col-span-4 flex items-center justify-center py-20 text-brand-obsidian/30 gap-3">
+              <Loader2 className="w-6 h-6 animate-spin" />
+              <span className="text-xs uppercase tracking-widest font-bold">Loading Systems...</span>
+            </div>
+          ) : featuredProducts.length > 0 ? (
+            featuredProducts.map((p) => <ProductCard key={p.id} product={p} />)
+          ) : (
+            <div className="col-span-4 text-center py-20 text-brand-obsidian/30 text-xs uppercase tracking-widest font-bold">
+              No instruments available
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 6. Performance Metrics */}
+      <section className="py-24 bg-brand-alabaster border-y border-brand-obsidian/10">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-12 divide-y md:divide-y-0 md:divide-x divide-brand-obsidian/10">
+           <ScrollReveal>
+             <div className="flex flex-col items-center text-center pt-8 md:pt-0">
+               <span className="text-5xl font-black text-blue-600 mb-2">40%</span>
+               <span className="text-xs uppercase font-bold tracking-widest text-brand-obsidian/60 mb-2">Faster Throughput</span>
+               <p className="text-sm font-medium">Optimize your lab's operational efficiency.</p>
+             </div>
+           </ScrollReveal>
+           <ScrollReveal>
+             <div className="flex flex-col items-center text-center pt-8 md:pt-0">
+               <span className="text-5xl font-black text-blue-600 mb-2">&lt;0.01%</span>
+               <span className="text-xs uppercase font-bold tracking-widest text-brand-obsidian/60 mb-2">Error Rate</span>
+               <p className="text-sm font-medium">Unparalleled accuracy and reproducibility.</p>
+             </div>
+           </ScrollReveal>
+           <ScrollReveal>
+             <div className="flex flex-col items-center text-center pt-8 md:pt-0">
+               <span className="text-5xl font-black text-blue-600 mb-2">ISO</span>
+               <span className="text-xs uppercase font-bold tracking-widest text-brand-obsidian/60 mb-2">9001 Certified</span>
+               <p className="text-sm font-medium">Manufactured under rigorous quality controls.</p>
+             </div>
+           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* 7. Streamlined Final CTA */}
+      <section className="py-32 bg-brand-pure-white text-center px-6">
+        <ScrollReveal>
+          <h2 className="text-[3rem] md:text-[5rem] font-black uppercase tracking-tighter leading-none mb-8">Equip Your<br/>Laboratory Today.</h2>
+          <p className="text-brand-obsidian/60 font-medium max-w-xl mx-auto mb-12">Contact our technical sales team for custom configurations, pricing, and live demonstrations of our systems.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/contact" className="px-10 py-5 bg-brand-obsidian text-white uppercase text-xs font-bold tracking-widest hover:bg-blue-600 transition-colors">
+              Consult an Expert
+            </Link>
+            <Link to="/catalog" className="px-10 py-5 bg-brand-alabaster border border-brand-obsidian/10 text-brand-obsidian uppercase text-xs font-bold tracking-widest hover:bg-gray-200 transition-colors">
+              Browse Systems
+            </Link>
+          </div>
+        </ScrollReveal>
+      </section>
+
     </div>
   );
 }
