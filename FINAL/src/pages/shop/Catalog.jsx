@@ -4,18 +4,14 @@ import { motion, AnimatePresence } from "motion/react";
 import { Loader2, PackageX, WifiOff } from "lucide-react";
 import { ProductCard } from "../../components/shop/ProductCard";
 import { ScrollReveal } from "../../components/shop/ScrollReveal";
+import api from "../../services/api";
 
 /**
- * Fetches products directly from the Express backend via the Vite proxy (/api → port 5000).
+ * Fetches products via the central api.js service (uses correct backend URL in prod).
  * No mock data. No localStorage. No fallback arrays.
  */
 async function fetchProducts() {
-  const res = await fetch("/api/products", {
-    headers: { "Content-Type": "application/json" },
-    cache: "no-store",          // never use browser HTTP cache
-  });
-  if (!res.ok) throw new Error(`Server error ${res.status}`);
-  return res.json();
+  return api.getProducts();
 }
 
 export function Catalog() {
