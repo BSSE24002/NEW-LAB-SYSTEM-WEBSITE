@@ -80,6 +80,37 @@ export function Home() {
         </div>
       </section>
 
+      {/* 1.5 Featured Products (Dynamic from DB) */}
+      <section className="bg-gray-50 py-20 border-t border-gray-200">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-3xl font-bold text-gray-900">Featured Instruments</h2>
+            <Link to="/catalog" className="text-[#0056b3] font-bold text-sm uppercase tracking-widest hover:underline flex items-center gap-1">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {featuredProducts.length > 0 ? (
+              featuredProducts.slice(0, 4).map(product => (
+                <Link to={`/product/${product.id}`} key={product.id} className="bg-white p-6 border border-gray-200 hover:shadow-lg transition-shadow group flex flex-col h-full">
+                  <div className="aspect-square flex items-center justify-center mb-4 p-4">
+                    <img src={product.thumbnail_url} alt={product.name} className="max-h-full object-contain group-hover:scale-105 transition-transform mix-blend-multiply" />
+                  </div>
+                  <span className="text-xs text-gray-400 mb-1">{product.sku}</span>
+                  <h3 className="text-[#0056b3] font-bold text-lg mb-2 leading-tight group-hover:underline">{product.name}</h3>
+                  <div className="mt-auto">
+                    <span className="text-xl font-bold text-gray-900">PKR {Number(product.price).toLocaleString()}</span>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="col-span-4 text-center py-12 text-gray-500">Loading instruments...</div>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* 2. Product Line Grid */}
       <section className="py-20 md:py-32 max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
@@ -191,37 +222,6 @@ export function Home() {
               <h4 className="font-bold text-sm text-gray-900 mb-2 text-center">Enjoy Free Shipping</h4>
               <p className="text-xs text-gray-500 text-center">on orders over 50,000 PKR</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Featured Products (Dynamic from DB) */}
-      <section className="bg-gray-50 py-20 border-t border-gray-200">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="flex justify-between items-end mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Featured Instruments</h2>
-            <Link to="/catalog" className="text-[#0056b3] font-bold text-sm uppercase tracking-widest hover:underline flex items-center gap-1">
-              View All <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {featuredProducts.length > 0 ? (
-              featuredProducts.slice(0, 4).map(product => (
-                <Link to={`/product/${product.id}`} key={product.id} className="bg-white p-6 border border-gray-200 hover:shadow-lg transition-shadow group flex flex-col h-full">
-                  <div className="aspect-square flex items-center justify-center mb-4 p-4">
-                    <img src={product.thumbnail_url} alt={product.name} className="max-h-full object-contain group-hover:scale-105 transition-transform mix-blend-multiply" />
-                  </div>
-                  <span className="text-xs text-gray-400 mb-1">{product.sku}</span>
-                  <h3 className="text-[#0056b3] font-bold text-lg mb-2 leading-tight group-hover:underline">{product.name}</h3>
-                  <div className="mt-auto">
-                    <span className="text-xl font-bold text-gray-900">PKR {Number(product.price).toLocaleString()}</span>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <div className="col-span-4 text-center py-12 text-gray-500">Loading instruments...</div>
-            )}
           </div>
         </div>
       </section>
