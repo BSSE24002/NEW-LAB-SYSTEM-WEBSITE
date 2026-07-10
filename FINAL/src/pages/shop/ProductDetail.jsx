@@ -101,7 +101,7 @@ export function ProductDetail() {
       price: product.price,
       color: product.attributes?.color || "",
       size: selectedSize || "One Size",
-      image: product.thumbnail_url || null,
+      thumbnail_url: product.thumbnail_url || null,
       quantity: 1,
     });
     setIsCartOpen(true);
