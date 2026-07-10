@@ -2,42 +2,36 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 
 const FLAGSHIP = {
-  name: "THE BOX TEE",
+  name: "ELECTRON MICROSCOPE",
   colors: [
     {
-      name: "VINTAGE WHITE.",
-      image:
-        "https://images.unsplash.com/photo-1546998590-6a6195049fa7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      name: "LENS SYSTEM.",
+      image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=1470&auto=format&fit=crop",
     },
     {
-      name: "WASHED BLACK.",
-      image:
-        "https://images.unsplash.com/photo-1610641470320-389b1173d493?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      name: "VACUUM CHAMBER.",
+      image: "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=1471&auto=format&fit=crop",
     },
     {
-      name: "FADED OLIVE.",
-      image:
-        "https://images.unsplash.com/photo-1635650804512-003e5ee6ccac?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      name: "SPECIMEN STAGE.",
+      image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1470&auto=format&fit=crop",
     },
     {
-      name: "HEATHER GREY.",
-      image:
-        "https://images.unsplash.com/photo-1500517484800-e4676bd66290?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      name: "ELECTRON GUN.",
+      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1469&auto=format&fit=crop",
     },
     {
-      name: "RAW DENIM.",
-      image:
-        "https://plus.unsplash.com/premium_photo-1734455394579-c162ddf40984?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      name: "DETECTORS.",
+      image: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=1470&auto=format&fit=crop",
     },
     {
-      name: "CRIMSON RED.",
-      image:
-        "https://images.unsplash.com/photo-1605218267012-fdc4670b0d20?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      name: "CONTROL UNIT.",
+      image: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1472&auto=format&fit=crop",
     },
   ],
 };
 
-export function FabricReveal() {
+export function InstrumentReveal() {
   const containerRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -116,7 +110,7 @@ export function FabricReveal() {
 
         {/* Text Area */}
         <div className="relative z-50 w-full px-6 md:px-12 pointer-events-none flex flex-col justify-center h-full items-center text-center">
-          <h2 className="text-[18vw] md:text-[14vw] leading-[0.8] font-sans font-black uppercase text-white tracking-tighter mix-blend-overlay">
+          <h2 className="text-[10vw] md:text-[8vw] leading-[0.8] font-sans font-black uppercase text-white tracking-tighter mix-blend-overlay">
             {FLAGSHIP.name}
           </h2>
           <div className="absolute bottom-20 flex justify-center text-white font-sans text-xl md:text-3xl font-black tracking-tight uppercase items-center w-full">

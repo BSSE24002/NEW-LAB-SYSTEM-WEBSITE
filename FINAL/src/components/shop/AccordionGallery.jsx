@@ -5,33 +5,33 @@ import { Link } from "react-router-dom";
 const ITEMS = [
   {
     id: 1,
-    title: "The Box Tee",
-    subtitle: "Womens",
-    img: "https://i.pinimg.com/1200x/0a/02/60/0a0260e8f37579e2b2a61ab5ad4f6e3a.jpg",
+    title: "Electron Microscope",
+    subtitle: "Imaging",
+    img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 2,
-    title: "Premium Caps",
-    subtitle: "Accessories",
-    img: "https://i.pinimg.com/1200x/cd/f1/d3/cdf1d35b34908d3e90c155456b21a335.jpg",
+    title: "Mass Spectrometer",
+    subtitle: "Analysis",
+    img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 3,
-    title: "Heavyweight Tee",
-    subtitle: "Mens",
-    img: "https://i.pinimg.com/736x/53/bb/04/53bb04d43aeac6e79864850e81b4ff37.jpg",
+    title: "Gas Chromatograph",
+    subtitle: "Separation",
+    img: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 4,
-    title: "Heritage Caps",
-    subtitle: "Accessories",
-    img: "https://i.pinimg.com/1200x/ee/61/ee/ee61ee3c40bd68a2be720329072be88b.jpg",
+    title: "Ultra Centrifuge",
+    subtitle: "Preparation",
+    img: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: 5,
-    title: "The Perfect Drape",
-    subtitle: "Core Collection",
-    img: "https://i.pinimg.com/1200x/a9/0f/09/a90f09e7fbb8a3110377f5a6761b9540.jpg",
+    title: "Thermal Cycler",
+    subtitle: "Core Equipment",
+    img: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200&auto=format&fit=crop",
   },
 ];
 
@@ -44,7 +44,7 @@ export function AccordionGallery() {
       {/* Absolute Logo overlay for that editorial magazine feel */}
       <div className="absolute top-8 left-8 z-20 pointer-events-none mix-blend-difference text-white">
         <h1 className="text-[5rem] md:text-[8rem] font-sans font-black tracking-tighter leading-none opacity-80 uppercase italic">
-          DRAPE.
+          NEW LAB.
         </h1>
       </div>
 

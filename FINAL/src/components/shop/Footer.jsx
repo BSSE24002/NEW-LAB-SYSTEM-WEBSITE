@@ -5,10 +5,10 @@ export function Footer() {
   return (
     <footer className="bg-brand-obsidian text-brand-pure-white py-20 px-6 lg:px-12">
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div className="col-span-1 md:col-span-2">
-          <h2 className="text-4xl font-sans font-black tracking-tighter uppercase mb-6 text-white">
-            NEW LAB SYSTEM
-          </h2>
+        <div className="col-span-1 md:col-span-2 flex flex-col items-start">
+          <Link to="/" className="inline-block">
+            <img src="/logo.png" alt="NEW LAB SYSTEM" className="h-10 md:h-12 w-auto mb-6 object-contain" />
+          </Link>
           <p className="text-brand-soft-grey text-sm max-w-sm uppercase tracking-widest leading-loose">
            Precision Analytical Instruments for Advanced Research and Industry.
           </p>

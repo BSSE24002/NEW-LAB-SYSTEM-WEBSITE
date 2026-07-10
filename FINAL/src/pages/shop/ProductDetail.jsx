@@ -183,6 +183,10 @@ export function ProductDetail() {
                 </span>
               </div>
             )}
+            {/* Watermark */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5] opacity-10 mix-blend-overlay">
+              <img src="/logo.png" alt="" className="w-1/2 max-w-[200px] object-contain drop-shadow-md" />
+            </div>
           </div>
 
           {/* Thumbnail strip — shown only if multiple images */}
@@ -212,6 +216,10 @@ export function ProductDetail() {
                     alt={`${product.name} — View ${i + 2}`}
                     className="w-full h-full object-cover"
                   />
+                  {/* Watermark */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5] opacity-10 mix-blend-overlay">
+                    <img src="/logo.png" alt="" className="w-1/2 max-w-[200px] object-contain drop-shadow-md" />
+                  </div>
                 </div>
               ))}
             </div>

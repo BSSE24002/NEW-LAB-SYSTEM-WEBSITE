@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FabricReveal } from "../../components/shop/FabricReveal";
+import { InstrumentReveal } from "../../components/shop/InstrumentReveal";
 import { ProductCard } from "../../components/shop/ProductCard";
 import { ScrambleText } from "../../components/shop/ScrambleText";
 import { MagneticButton } from "../../components/shop/MagneticButton";
@@ -31,7 +31,7 @@ export function Home() {
     <div className="bg-brand-pure-white text-brand-obsidian">
       <section className="relative h-[100svh] bg-black overflow-hidden flex items-center justify-center">
         <motion.div initial={{ scale: 1.1, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }} className="absolute inset-0">
-          <img fetchpriority="high" src="https://images.unsplash.com/photo-1594587895869-d90d9ab289f1?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Hero Campaign" className="w-full h-full object-cover opacity-70" />
+          <img fetchpriority="high" src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=1631&auto=format&fit=crop" alt="Hero Campaign" className="w-full h-full object-cover opacity-70" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
         </motion.div>
         <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 mt-20">
@@ -65,7 +65,7 @@ export function Home() {
       <NewArrivalsSection />
       <BentoCategories />
       <PhilosophyQuote />
-      <FabricReveal />
+      <InstrumentReveal />
       <CampaignVideo />
 
       <section className="py-40 bg-brand-pure-white">
@@ -137,12 +137,12 @@ export function Home() {
             </div>
             <div className="order-1 lg:order-2 grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-4 pt-12">
-                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" className="w-full h-[400px] object-cover rounded-2xl" alt="Tee 1" /></ScrollReveal>
-                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800&auto=format&fit=crop" className="w-full h-[300px] object-cover rounded-2xl" alt="Cap" /></ScrollReveal>
+                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=800&auto=format&fit=crop" className="w-full h-[400px] object-cover rounded-2xl" alt="Instrument 1" /></ScrollReveal>
+                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800&auto=format&fit=crop" className="w-full h-[300px] object-cover rounded-2xl" alt="Lab 1" /></ScrollReveal>
               </div>
               <div className="flex flex-col gap-4">
-                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800&auto=format&fit=crop" className="w-full h-[300px] object-cover rounded-2xl" alt="Tee 2" /></ScrollReveal>
-                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1574015974293-817812ccf152?q=80&w=800&auto=format&fit=crop" className="w-full h-[400px] object-cover rounded-2xl" alt="Cap 2" /></ScrollReveal>
+                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop" className="w-full h-[300px] object-cover rounded-2xl" alt="Instrument 2" /></ScrollReveal>
+                <ScrollReveal><img loading="lazy" src="https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=800&auto=format&fit=crop" className="w-full h-[400px] object-cover rounded-2xl" alt="Lab 2" /></ScrollReveal>
               </div>
             </div>
           </div>

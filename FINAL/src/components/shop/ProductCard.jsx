@@ -116,6 +116,10 @@ export function ProductCard({ product }) {
                   }`}
                 />
               )}
+              {/* Watermark Logo */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5] opacity-10 mix-blend-overlay">
+                <img src="/logo.png" alt="" className="w-1/2 max-w-[150px] object-contain drop-shadow-md" />
+              </div>
             </>
           )}
 

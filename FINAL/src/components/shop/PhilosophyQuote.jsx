@@ -32,11 +32,11 @@ export function PhilosophyQuote() {
             <div className="w-px h-16 bg-white/20" />
           </div>
           <p className="text-[2rem] md:text-[3.5rem] lg:text-[4.5rem] font-sans font-black tracking-tighter uppercase leading-[1.1] mb-12">
-            "We don't design for a season. <br className="hidden md:block" />
-            <span className="text-white/40">We design for a lifetime.</span>"
+            "We don't just supply instruments. <br className="hidden md:block" />
+            <span className="text-white/40">We empower discoveries.</span>"
           </p>
           <div className="uppercase tracking-[0.3em] text-xs font-bold text-white/60">
-            — The Drape Ethos
+            — The Lab System Ethos
           </div>
         </ScrollReveal>
       </div>

@@ -5,32 +5,32 @@ import { motion } from "motion/react";
 
 const CATEGORIES = [
   {
-    title: "Heavyweight Tees",
+    title: "Spectrometers",
     span: "col-span-1 md:col-span-2 row-span-2",
     image:
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1200&auto=format&fit=crop",
-    link: "/catalog?category=tees",
+      "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=1200&auto=format&fit=crop",
+    link: "/catalog?category=Spectrometers",
   },
   {
-    title: "Outerwear",
+    title: "Microscopes",
     span: "col-span-1 row-span-1",
     image:
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop",
-    link: "/catalog?category=outerwear",
+      "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800&auto=format&fit=crop",
+    link: "/catalog?category=Microscopes",
   },
   {
-    title: "Headwear",
+    title: "Centrifuges",
     span: "col-span-1 row-span-1",
     image:
-      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800&auto=format&fit=crop",
-    link: "/catalog?category=accessories",
+      "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop",
+    link: "/catalog?category=Centrifuges",
   },
   {
-    title: "Bottoms",
+    title: "Chromatographs",
     span: "col-span-1 md:col-span-2 row-span-1",
     image:
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=1200&auto=format&fit=crop",
-    link: "/catalog?category=bottoms",
+      "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=1200&auto=format&fit=crop",
+    link: "/catalog?category=Chromatographs",
   },
 ];
 
@@ -42,10 +42,10 @@ export function BentoCategories() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>
               <h2 className="text-[3rem] md:text-[5rem] leading-none font-sans font-black tracking-tight uppercase mb-4 text-brand-obsidian">
-                The Uniform.
+                Core Instruments.
               </h2>
               <p className="text-brand-obsidian/70 text-lg md:text-xl font-medium max-w-lg">
-                Curated categories designed to integrate seamlessly into your daily rotation.
+                Curated categories engineered to integrate seamlessly into your laboratory workflows.
               </p>
             </div>
           </div>

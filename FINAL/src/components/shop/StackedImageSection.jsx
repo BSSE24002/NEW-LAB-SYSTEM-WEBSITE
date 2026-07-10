@@ -3,11 +3,11 @@ import { motion } from "motion/react";
 import { ScrollReveal } from "./ScrollReveal";
 
 const lookbookImages = [
-  "https://i.pinimg.com/736x/c0/98/7b/c0987bd0616949fa1b00538d7896da0f.jpg",
-  "https://images.unsplash.com/photo-1626537848208-3b7acf765011?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://i.pinimg.com/1200x/5f/76/89/5f7689b352566d8bfd8062a7d070317d.jpg",
-  "https://plus.unsplash.com/premium_photo-1690406382707-16d9cc7a83d5?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://i.pinimg.com/736x/56/c4/ae/56c4aec15b2a951a6326ed9d54ff6204.jpg"
+  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=687&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=687&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=687&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=687&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=687&auto=format&fit=crop"
 ];
 
 // Predefined rotations to prevent layout jumping on re-renders, giving a neat fanned-out look
@@ -51,21 +51,21 @@ export function StackedImageSection() {
                   className="text-transparent select-none transition-colors duration-500 hover:text-brand-obsidian" 
                   style={{ WebkitTextStroke: "2px rgba(0,0,0,0.15)" }}
                 >
-                  STREETWEAR
+                  INNOVATION
                 </span>
                 <span className="text-brand-obsidian selection:bg-black selection:text-white">
-                  STREETWEAR
+                  INNOVATION
                 </span>
                 <span 
                   className="text-transparent select-none transition-colors duration-500 hover:text-brand-obsidian" 
                   style={{ WebkitTextStroke: "2px rgba(0,0,0,0.15)" }}
                 >
-                  STREETWEAR
+                  INNOVATION
                 </span>
               </div>
               <p className="text-brand-obsidian/70 text-lg md:text-xl font-medium leading-relaxed tracking-wide">
-                A revolution in silhouette and form. We deconstruct classic staples and rebuild them with uncompromising fabrics.
-                Every layer tells a story of purposeful design, balancing grit with absolute refinement.
+                A revolution in scientific discovery and analysis. We engineer sophisticated instruments with uncompromising accuracy.
+                Every component is meticulously calibrated, balancing profound precision with absolute reliability.
               </p>
             </ScrollReveal>
           </div>

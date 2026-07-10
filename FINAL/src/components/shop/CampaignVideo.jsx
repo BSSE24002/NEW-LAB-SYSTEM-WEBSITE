@@ -10,10 +10,10 @@ export function CampaignVideo() {
         <ScrollReveal>
           <div className="text-center mb-12">
             <h2 className="text-[3rem] md:text-[5rem] font-sans font-black tracking-tighter uppercase text-brand-obsidian selection:bg-black selection:text-white leading-none mb-4">
-              Motion & Form
+              Precision in Action
             </h2>
             <p className="text-brand-obsidian/60 text-xs md:text-sm tracking-[0.4em] uppercase font-bold">
-              Cinematic Experience
+              Data You Can Trust
             </p>
           </div>
         </ScrollReveal>
@@ -50,7 +50,7 @@ export function CampaignVideo() {
                 
               </h3>
               <p className="text-white/90 text-xs md:text-sm tracking-[0.5em] uppercase mt-6 drop-shadow-md font-bold">
-                The Visual Symphony
+                Uncompromising Engineering
               </p>
             </div>
 
