@@ -337,11 +337,12 @@ export function ProductDetail() {
             {/* Description & Details */}
             <div className="space-y-8 border-t border-brand-soft-grey/20 pt-8">
               {product.description && (
-                <div>
-                  <h4 className="text-xs font-semibold tracking-widest uppercase mb-4">Description</h4>
-                  <p className="text-sm leading-relaxed text-brand-obsidian/80 font-sans">
-                    {product.description}
-                  </p>
+                <div className="mt-8">
+                  <h4 className="text-xs font-semibold tracking-widest uppercase mb-6 text-brand-obsidian border-b border-gray-100 pb-2">Description & Specifications</h4>
+                  <div 
+                    className="text-sm leading-relaxed text-brand-obsidian/90 font-sans ai-generated-content"
+                    dangerouslySetInnerHTML={{ __html: product.description }} 
+                  />
                 </div>
               )}
 

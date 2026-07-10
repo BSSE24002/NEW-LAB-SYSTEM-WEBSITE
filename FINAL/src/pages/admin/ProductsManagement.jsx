@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Plus, Edit2, Trash2, Image as ImageIcon, Save, X, Loader2, PlusCircle, MinusCircle } from "lucide-react";
+import { Plus, Edit2, Trash2, Image as ImageIcon, Save, X, Loader2, PlusCircle, MinusCircle, Wand2 } from "lucide-react";
 import { api } from "../../services/api";
+import { enhanceProductDescription } from "../../services/ai";
 
 export function ProductsManagement() {
   const [products, setProducts] = useState([]);
@@ -8,6 +9,7 @@ export function ProductsManagement() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+  const [isEnhancing, setIsEnhancing] = useState(false);
 
   const [editingId, setEditingId] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
@@ -92,6 +94,22 @@ export function ProductsManagement() {
       alert(`Save failed: ${e.message}`);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleEnhanceDescription = async () => {
+    if (!formData.description) {
+      alert("Please enter some raw text in the description field first.");
+      return;
+    }
+    setIsEnhancing(true);
+    try {
+      const enhancedHTML = await enhanceProductDescription(formData.description);
+      updateFormData("description", enhancedHTML);
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setIsEnhancing(false);
     }
   };
 
@@ -202,8 +220,25 @@ export function ProductsManagement() {
                 )}
               </div>
               <div>
-                <label className={labelClass}>Description</label>
-                <textarea value={formData.description} onChange={(e) => updateFormData("description", e.target.value)} rows={3} className={inputClass} />
+                <div className="flex justify-between items-end mb-2">
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0">Description</label>
+                  <button 
+                    type="button" 
+                    onClick={handleEnhanceDescription} 
+                    disabled={isEnhancing}
+                    className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-[#0056b3] hover:text-[#0A2540] transition-colors disabled:opacity-50"
+                  >
+                    {isEnhancing ? <Loader2 className="w-3 h-3 animate-spin" /> : <Wand2 className="w-3 h-3" />}
+                    ✨ Enhance with AI
+                  </button>
+                </div>
+                <textarea 
+                  value={formData.description} 
+                  onChange={(e) => updateFormData("description", e.target.value)} 
+                  rows={8} 
+                  className={inputClass} 
+                  placeholder="Paste raw specifications or features here, then click ✨ Enhance with AI to automatically format into beautiful HTML tables and lists."
+                />
               </div>
             </div>
 
