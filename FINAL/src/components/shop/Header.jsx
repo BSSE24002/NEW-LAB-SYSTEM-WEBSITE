@@ -115,161 +115,65 @@ export function Header() {
           className={`${styles.header} ${isScrolled ? styles.solid : "bg-white border-b border-gray-100"} w-full transition-colors duration-300`}
         >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between relative">
-          <div className="flex items-center gap-8">
-            <button className="p-2 -ml-2 block md:hidden" onClick={() => setIsMobileMenuOpen(true)}>
-              <Menu className="w-5 h-5" />
-            </button>
-
-            <nav className="hidden md:flex items-center gap-8 h-full">
-              <div className={styles.navItem}>
-                <Link
-                  to="/catalog"
-                  className="text-xs tracking-[0.2em] uppercase font-semibold hover:opacity-70 transition-opacity"
-                >
-                  Shop
-                </Link>
-
-                {/* Mega Menu Placeholder */}
-                <div className={styles.megaMenu}>
-                  <div className={styles.megaMenuColumn}>
-                    <h3 className={styles.megaMenuTitle}>Categories</h3>
-                    <ul className={styles.megaMenuList}>
-                      {categories.length > 0 ? (
-                        categories.map((cat) => (
-                          <li key={cat.id}>
-                            <Link to={`/catalog?category=${cat.name}`} className={styles.megaMenuLink}>
-                              {cat.name}
-                            </Link>
-                          </li>
-                        ))
-                      ) : (
-                        <li>
-                          <Link to="/catalog" className={styles.megaMenuLink}>View All</Link>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                  <div className={styles.megaMenuColumn}>
-                    <h3 className={styles.megaMenuTitle}>Offers & Discounts</h3>
-                    <ul className={styles.megaMenuList}>
-                      {discounts.length > 0 ? (
-                        discounts.map((discount) => (
-                          <li key={discount.id}>
-                            <Link to="/catalog" className={`${styles.megaMenuLink} text-red-500 font-bold`}>
-                              {discount.type === 'percentage' ? `${discount.value}% OFF` : `PKR ${discount.value} OFF`} 
-                              {discount.target === 'all' ? ' Everything' : discount.target === 'category' ? ` on ${discount.target_value}` : ''}
-                            </Link>
-                          </li>
-                        ))
-                      ) : (
-                        <li>
-                          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">No active offers</span>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                  <div className={styles.megaMenuColumn}>
-                    <h3 className={styles.megaMenuTitle}>Collections & Tags</h3>
-                    <ul className={styles.megaMenuList}>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          Advanced Spectrometry
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          Precision Optics
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          Automation Systems
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/catalog" className={styles.megaMenuLink}>
-                          Best Sellers
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className={styles.megaMenuColumn}>
-                    <img
-                      src="https://images.unsplash.com/photo-1594587895869-d90d9ab289f1?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="Latest Campaign"
-                      className={styles.megaMenuImage}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.navItem}>
-                <Link
-                  to="/about"
-                  className="text-xs tracking-[0.2em] uppercase font-semibold hover:opacity-70 transition-opacity"
-                >
-                  About
-                </Link>
-              </div>
-
-              <div className={styles.navItem}>
-                <Link
-                  to="/track-order"
-                  className="text-xs tracking-[0.2em] uppercase font-semibold hover:opacity-70 transition-opacity"
-                >
-                  Track Order
-                </Link>
-              </div>
-            </nav>
-          </div>
-
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <Link
-              to="/"
-              className="text-3xl font-sans font-black tracking-tighter uppercase relative group"
-            >
-              <img src="/logo1.png" alt="NEW LAB SYSTEM" className="h-10 animate-logo" />
+          
+          {/* Left section: Nav links */}
+          <div className="flex-1 flex items-center justify-start gap-6 hidden md:flex">
+            <Link to="/catalog" className="text-sm font-bold tracking-widest uppercase hover:text-blue-600 transition-colors">
+              Products
+            </Link>
+            <Link to="/catalog?industry=true" className="text-sm font-bold tracking-widest uppercase hover:text-blue-600 transition-colors">
+              Industry
+            </Link>
+            <Link to="/catalog?parameters=true" className="text-sm font-bold tracking-widest uppercase hover:text-blue-600 transition-colors">
+              Parameters
             </Link>
           </div>
 
-          <div className="flex items-center gap-8">
-            <button 
-              className="p-2 hidden md:block hover:opacity-70 transition-opacity"
+          <div className="flex items-center md:hidden flex-1">
+            <button className="p-2 -ml-2 hover:text-blue-600" onClick={() => setIsMobileMenuOpen(true)}>
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Center section: Logo */}
+          <Link to="/" className="flex flex-col items-center justify-center shrink-0">
+            <img src="/logo1.png" alt="Logo" className="h-10 w-auto mb-1" />
+            <span className="text-[10px] font-black tracking-[0.3em] uppercase text-blue-600 leading-none">Instruments</span>
+          </Link>
+
+          {/* Right section: Actions */}
+          <div className="flex-1 flex items-center justify-end gap-6">
+            {/* Search Bar - Hidden on small screens */}
+            <div className="hidden lg:flex items-center relative w-64 border border-gray-300 rounded-sm">
+              <input type="text" placeholder="Search the store" className="w-full py-2 px-3 text-sm focus:outline-none focus:border-blue-600" />
+              <button className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600">
+                <Search className="w-4 h-4" />
+              </button>
+            </div>
+            
+            <button
+              className="p-2 hover:text-blue-600 transition-colors lg:hidden"
               onClick={() => setIsSearchOpen(true)}
             >
               <Search className="w-5 h-5" />
             </button>
+
+            <button className="text-xs font-bold uppercase tracking-widest hover:text-blue-600 hidden md:block">SDS</button>
+
             <button
+              className="p-2 hover:text-blue-600 transition-colors"
               onClick={handleUserClick}
-              className="text-xs tracking-[0.2em] uppercase hidden md:flex items-center gap-2 hover:opacity-70 transition-opacity font-semibold"
             >
-              {role === "admin" || role === "staff" ? (
-                <>
-                  <Shield className="w-4 h-4" /> PORTAL
-                </>
-              ) : role === "customer" ? (
-                <>
-                  <User className="w-4 h-4" /> PROFILE
-                </>
-              ) : (
-                <>
-                  <User className="w-4 h-4" /> LOGIN
-                </>
-              )}
+              <User className="w-5 h-5" />
             </button>
+
             <button
-              className="p-2 -mr-2 relative"
+              className="p-2 hover:text-blue-600 transition-colors relative"
               onClick={() => setIsCartOpen(true)}
             >
               <ShoppingBag className="w-5 h-5" />
               {itemCount > 0 && (
-                <span
-                  className={`absolute top-1 right-1 w-4 h-4 text-[10px] flex items-center justify-center rounded-full font-mono transition-colors ${
-                    isScrolled
-                      ? "bg-brand-obsidian text-white"
-                      : "bg-white text-brand-obsidian"
-                  }`}
-                >
+                <span className="absolute top-1 right-1 w-4 h-4 text-[10px] flex items-center justify-center rounded-full font-mono bg-blue-600 text-white">
                   {itemCount}
                 </span>
               )}
