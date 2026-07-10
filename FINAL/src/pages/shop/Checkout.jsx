@@ -217,7 +217,14 @@ export function Checkout() {
                       <h4 className="font-serif text-sm tracking-wide text-brand-obsidian">{item.name}</h4>
                       <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-widest">{item.color} / {item.size} x {item.quantity}</p>
                     </div>
-                    <div className="font-mono text-xs">PKR {(item.price * item.quantity).toFixed(2)}</div>
+                    <div className="font-mono text-xs">
+                      {item.original_price && item.original_price > item.price && (
+                        <span className="line-through text-gray-400 mr-2">PKR {(item.original_price * item.quantity).toFixed(2)}</span>
+                      )}
+                      <span className={item.original_price && item.original_price > item.price ? "text-red-600 font-bold" : ""}>
+                        PKR {(item.price * item.quantity).toFixed(2)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ))}

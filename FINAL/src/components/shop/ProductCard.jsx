@@ -73,6 +73,7 @@ export function ProductCard({ product }) {
       id: product.id,
       name: product.name,
       price: product.price,
+      original_price: product.original_price,
       color,
       size,
       thumbnail_url: primaryImage || null,
@@ -116,6 +117,13 @@ export function ProductCard({ product }) {
                 />
               )}
             </>
+          )}
+
+          {/* Discount badge */}
+          {product.discount_percentage && !isOutOfStock && (
+            <div className="absolute top-3 right-3 bg-red-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-[0.1em] px-2.5 py-1 rounded-full z-10">
+              -{product.discount_percentage}%
+            </div>
           )}
 
           {/* Out of Stock badge */}
@@ -178,9 +186,22 @@ export function ProductCard({ product }) {
               {color}
             </p>
           )}
-          <span className={`text-md font-mono font-medium tracking-tight ${isOutOfStock ? "opacity-50" : ""}`}>
-            PKR {parseFloat(product.price).toLocaleString()}
-          </span>
+          <div className={`flex items-center gap-2 ${isOutOfStock ? "opacity-50" : ""}`}>
+            {product.original_price && product.original_price > product.price ? (
+              <>
+                <span className="text-md font-mono font-medium tracking-tight line-through text-gray-400">
+                  PKR {parseFloat(product.original_price).toLocaleString()}
+                </span>
+                <span className="text-md font-mono font-bold tracking-tight text-red-600">
+                  PKR {parseFloat(product.price).toLocaleString()}
+                </span>
+              </>
+            ) : (
+              <span className="text-md font-mono font-medium tracking-tight">
+                PKR {parseFloat(product.price).toLocaleString()}
+              </span>
+            )}
+          </div>
         </div>
       </Link>
     </ScrollReveal>

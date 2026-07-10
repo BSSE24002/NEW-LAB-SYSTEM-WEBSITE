@@ -53,7 +53,7 @@ const getAllOrders = async (req, res) => {
         const allOrders = [];
         for (const order of ordersResult.rows) {
             const itemsResult = await db.query(
-                `SELECT product_name AS name, product_sku AS sku, quantity AS qty, price_at_time AS price
+                `SELECT product_name AS name, product_sku AS sku, quantity AS qty, price_at_time AS price, original_price_at_time AS original_price
                  FROM Order_Items WHERE online_order_id = $1;`,
                 [order.id]
             );
@@ -63,7 +63,7 @@ const getAllOrders = async (req, res) => {
         // Fetch items for POS transactions
         for (const tx of posResult.rows) {
             const itemsResult = await db.query(
-                `SELECT product_name AS name, product_sku AS sku, quantity AS qty, price_at_time AS price
+                `SELECT product_name AS name, product_sku AS sku, quantity AS qty, price_at_time AS price, original_price_at_time AS original_price
                  FROM Order_Items WHERE pos_transaction_id = $1;`,
                 [tx.id]
             );
@@ -156,9 +156,9 @@ const createOrder = async (req, res) => {
         if (items && items.length > 0) {
             for (const item of items) {
                 await client.query(
-                    `INSERT INTO Order_Items (online_order_id, product_id, product_name, product_sku, size, quantity, price_at_time)
-                     VALUES ($1, $2, $3, $4, $5, $6, $7);`,
-                    [newOrder.id, item.product_id || null, item.name, item.sku, item.size || null, item.qty, item.price]
+                    `INSERT INTO Order_Items (online_order_id, product_id, product_name, product_sku, size, quantity, price_at_time, original_price_at_time)
+                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`,
+                    [newOrder.id, item.product_id || null, item.name, item.sku, item.size || null, item.qty, item.price, item.original_price || null]
                 );
                 // Decrement inventory if product_id known
                 if (item.product_id) {
@@ -240,7 +240,7 @@ const trackOrder = async (req, res) => {
         if (result.rows.length === 0) return res.status(404).json({ error: 'Order not found.' });
         const order = result.rows[0];
         const itemsResult = await db.query(
-            `SELECT product_name AS name, product_sku AS sku, quantity AS qty, price_at_time AS price
+            `SELECT product_name AS name, product_sku AS sku, quantity AS qty, price_at_time AS price, original_price_at_time AS original_price
              FROM Order_Items WHERE online_order_id = $1;`,
             [order.id]
         );

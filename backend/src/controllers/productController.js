@@ -1,6 +1,55 @@
 // File: backend/src/controllers/productController.js
 const db = require('../config/db');
 
+// Helper to apply automatic discounts
+const applyDiscounts = async (products) => {
+    try {
+        const discountsResult = await db.query('SELECT * FROM Discounts WHERE active = TRUE');
+        const discounts = discountsResult.rows;
+        if (discounts.length === 0) return products;
+
+        return products.map(product => {
+            let bestPrice = parseFloat(product.price);
+            let bestDiscountInfo = null;
+
+            discounts.forEach(d => {
+                let applies = false;
+                if (d.target === 'all') applies = true;
+                if (d.target === 'category' && (d.target_value == product.category_id || String(d.target_value).toLowerCase() === String(product.category_name).toLowerCase())) applies = true;
+                if (d.target === 'product' && d.target_value == product.id) applies = true;
+
+                if (applies) {
+                    let currentPrice = parseFloat(product.price);
+                    if (d.type === 'percentage') {
+                        currentPrice = currentPrice - (currentPrice * (parseFloat(d.value) / 100));
+                    } else if (d.type === 'fixed') {
+                        currentPrice = currentPrice - parseFloat(d.value);
+                    }
+                    if (currentPrice < bestPrice) {
+                        bestPrice = currentPrice;
+                        bestDiscountInfo = d;
+                    }
+                }
+            });
+
+            if (bestPrice < parseFloat(product.price)) {
+                return {
+                    ...product,
+                    original_price: parseFloat(product.price),
+                    price: Math.max(0, bestPrice),
+                    discount_percentage: bestDiscountInfo.type === 'percentage' 
+                                         ? parseFloat(bestDiscountInfo.value) 
+                                         : Math.round(((parseFloat(product.price) - bestPrice) / parseFloat(product.price)) * 100)
+                };
+            }
+            return product;
+        });
+    } catch (err) {
+        console.error('Error applying discounts:', err);
+        return products;
+    }
+};
+
 // GET /api/products  — includes stock_quantity via LEFT JOIN with Inventory
 const getAllProducts = async (req, res) => {
     try {
@@ -12,7 +61,8 @@ const getAllProducts = async (req, res) => {
             LEFT JOIN Inventory i ON i.product_id = p.id
             ORDER BY p.created_at DESC;
         `);
-        res.status(200).json(result.rows);
+        const discountedProducts = await applyDiscounts(result.rows);
+        res.status(200).json(discountedProducts);
     } catch (error) {
         console.error('Error fetching products:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -32,7 +82,8 @@ const getProductById = async (req, res) => {
             [req.params.id]
         );
         if (result.rows.length === 0) return res.status(404).json({ error: 'Product not found' });
-        res.status(200).json(result.rows[0]);
+        const discountedProducts = await applyDiscounts(result.rows);
+        res.status(200).json(discountedProducts[0]);
     } catch (error) {
         console.error('Error fetching product:', error);
         res.status(500).json({ error: 'Internal Server Error' });

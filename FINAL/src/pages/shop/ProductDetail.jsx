@@ -99,6 +99,7 @@ export function ProductDetail() {
       id: product.id,
       name: product.name,
       price: product.price,
+      original_price: product.original_price,
       color: product.attributes?.color || "",
       size: selectedSize || "One Size",
       thumbnail_url: product.thumbnail_url || null,
@@ -167,9 +168,16 @@ export function ProductDetail() {
               </div>
             )}
 
+            {/* Discount badge */}
+            {product.discount_percentage && !isOutOfStock && (
+              <div className="absolute top-4 right-4 bg-red-600/90 backdrop-blur-sm text-white text-xs font-bold uppercase tracking-[0.1em] px-3 py-1.5 rounded-full z-10">
+                -{product.discount_percentage}%
+              </div>
+            )}
+
             {/* Out of Stock overlay */}
             {isOutOfStock && (
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center z-10">
                 <span className="bg-white text-brand-obsidian text-xs font-black uppercase tracking-[0.2em] px-6 py-3 rounded-full">
                   Out of Stock
                 </span>
@@ -224,9 +232,22 @@ export function ProductDetail() {
               className="text-6xl md:text-[5rem] font-serif font-black tracking-tight uppercase leading-[0.85] mb-6 text-brand-obsidian"
             />
 
-            <p className="text-3xl font-mono text-brand-obsidian/60 font-medium tracking-tight mb-4">
-              PKR {parseFloat(product.price).toLocaleString()}
-            </p>
+            <div className="flex items-center gap-4 mb-4">
+              {product.original_price && product.original_price > product.price ? (
+                <>
+                  <p className="text-3xl font-mono text-gray-400 font-medium tracking-tight line-through">
+                    PKR {parseFloat(product.original_price).toLocaleString()}
+                  </p>
+                  <p className="text-3xl font-mono text-red-600 font-bold tracking-tight">
+                    PKR {parseFloat(product.price).toLocaleString()}
+                  </p>
+                </>
+              ) : (
+                <p className="text-3xl font-mono text-brand-obsidian/60 font-medium tracking-tight">
+                  PKR {parseFloat(product.price).toLocaleString()}
+                </p>
+              )}
+            </div>
 
             {/* Stock indicator */}
             {isOutOfStock ? (

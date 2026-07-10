@@ -108,7 +108,14 @@ function CartDrawer() {
                                 {item.name}
                               </h3>
                               <span className="text-sm font-mono">
-                                PKR {item.price}
+                                {item.original_price && item.original_price > item.price && (
+                                  <span className="line-through text-gray-400 mr-2 text-xs">
+                                    PKR {item.original_price}
+                                  </span>
+                                )}
+                                <span className={item.original_price && item.original_price > item.price ? "text-red-600 font-bold" : ""}>
+                                  PKR {item.price}
+                                </span>
                               </span>
                             </div>
                             <p className="text-xs text-brand-soft-grey mt-2 tracking-wider uppercase">

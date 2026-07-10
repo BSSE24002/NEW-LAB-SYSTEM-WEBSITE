@@ -102,7 +102,14 @@ export function TrackOrder() {
                     {(result.items || []).map((item, i) => (
                       <div key={i} className="flex justify-between items-center bg-gray-50/50 p-4 rounded-xl">
                         <div className="text-sm font-medium">{item.name} <span className="text-gray-400 ml-2">x{item.qty}</span></div>
-                        <div className="font-mono text-sm font-bold">PKR {((item.price || 0) * (item.qty || 1)).toFixed(2)}</div>
+                        <div className="font-mono text-sm font-bold">
+                          {item.original_price && item.original_price > item.price && (
+                            <span className="line-through text-gray-400 mr-2 text-xs">PKR {((item.original_price || 0) * (item.qty || 1)).toFixed(2)}</span>
+                          )}
+                          <span className={item.original_price && item.original_price > item.price ? "text-red-600" : ""}>
+                            PKR {((item.price || 0) * (item.qty || 1)).toFixed(2)}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
