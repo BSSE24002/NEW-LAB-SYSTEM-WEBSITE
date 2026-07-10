@@ -58,3 +58,42 @@ ${rawText}
     throw new Error(error.message || "Failed to enhance description. Check console for details.");
   }
 }
+
+export async function chatWithAssistant(userMessages) {
+  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error("VITE_GROQ_API_KEY is not set.");
+  }
+
+  const systemMessage = {
+    role: "system",
+    content: "You are an AI sales assistant for Al Fatah Lab Systems. Your job is to help users find laboratory products (pH meters, titrators, etc.) based on their needs. Act as a filter and suggest product categories or specific tools. If they feel difficulty, guide them gently. DO NOT answer irrelevant questions outside of lab equipment, science, or site navigation. Keep your answers concise, professional, and helpful."
+  };
+
+  try {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [systemMessage, ...userMessages],
+        temperature: 0.5,
+        max_tokens: 250
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch from Groq API");
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content.trim();
+  } catch (error) {
+    console.error("Chat API Error:", error);
+    return "I'm having trouble connecting right now. Please try again or use the WhatsApp button to contact our human support!";
+  }
+}

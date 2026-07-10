@@ -205,21 +205,74 @@ export function Home() {
         </div>
       </div>
 
-      {/* 5. Official Brands Banner */}
-      <div className="max-w-[1400px] mx-auto px-4 mt-12 md:mt-16">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
-          <h2 className="text-center text-xl font-bold text-gray-800 mb-8 uppercase tracking-wide">Official Partners & Brands</h2>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70">
-            {BRANDS.map((brand, idx) => (
-              <div key={idx} className="h-8 md:h-12 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
-                {brand.img.includes('http') ? (
-                  <img src={brand.img} alt={brand.name} className="max-h-full max-w-[120px] md:max-w-[160px] object-contain" />
-                ) : (
-                  <span className="font-black text-xl text-gray-800">{brand.name}</span>
-                )}
-              </div>
+      {/* 5. Official Brands Banner (Animated Marquee) */}
+      <div className="bg-white border-y border-gray-200 mt-12 md:mt-16 py-12 overflow-hidden">
+        <h2 className="text-center text-xl font-bold text-gray-800 mb-8 uppercase tracking-wide">Official Partners & Brands</h2>
+        <div className="relative w-full flex" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
+          <motion.div 
+            animate={{ x: ["0%", "-50%"] }} 
+            transition={{ repeat: Infinity, ease: "linear", duration: 20 }} 
+            className="flex whitespace-nowrap gap-16 md:gap-24 items-center w-max px-8"
+          >
+            {/* Repeat the brands array twice to create an infinite loop effect */}
+            {[...Array(2)].map((_, i) => (
+              <React.Fragment key={i}>
+                {BRANDS.map((brand, idx) => (
+                  <div key={`${i}-${idx}`} className="h-10 md:h-14 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
+                    {brand.img.includes('http') ? (
+                      <img src={brand.img} alt={brand.name} className="max-h-full max-w-[140px] md:max-w-[180px] object-contain" />
+                    ) : (
+                      <span className="font-black text-2xl text-gray-800">{brand.name}</span>
+                    )}
+                  </div>
+                ))}
+              </React.Fragment>
             ))}
-          </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* 5.5 New Arrivals (Additional Grid) */}
+      <div className="max-w-[1400px] mx-auto px-4 mt-12 md:mt-16">
+        <div className="flex items-center justify-between mb-6 border-b border-gray-300 pb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">New Arrivals</h2>
+          <Link to="/catalog" className="text-[#0056b3] font-medium hover:underline text-sm md:text-base flex items-center gap-1">
+            Discover Latest <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
+          {featuredProducts.length > 0 ? (
+            // Reversing the array just to show a different order for New Arrivals
+            [...featuredProducts].reverse().slice(0, 5).map((product, idx) => (
+              <div key={`new-${product.id}`} className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow group flex flex-col relative">
+                <div className="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase z-10">
+                  New
+                </div>
+                <Link to={`/product/${product.id}`} className="block relative aspect-square p-4 bg-white flex items-center justify-center">
+                  <img src={product.thumbnail_url} alt={product.name} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 mix-blend-multiply" />
+                </Link>
+                <div className="p-3 md:p-4 flex flex-col flex-grow border-t border-gray-100">
+                  <div className="text-[10px] text-gray-400 mb-1 font-mono">{product.sku}</div>
+                  <Link to={`/product/${product.id}`} className="block">
+                    <h3 className="text-gray-800 text-sm md:text-sm font-medium mb-2 line-clamp-2 hover:text-[#0056b3] transition-colors leading-snug h-10">
+                      {product.name}
+                    </h3>
+                  </Link>
+                  <div className="mt-auto">
+                    <div className="text-[#0A2540] font-bold text-lg md:text-xl">
+                      PKR {Number(product.price).toLocaleString()}
+                    </div>
+                  </div>
+                  <Link to={`/product/${product.id}`} className="mt-3 w-full bg-[#f4f8fb] hover:bg-[#0056b3] hover:text-white text-[#0056b3] border border-blue-100 font-semibold py-2 rounded text-center text-xs md:text-sm transition-colors flex items-center justify-center gap-2">
+                    <ShoppingCart className="w-4 h-4" /> View Details
+                  </Link>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full py-12 text-center text-gray-500">Loading new arrivals...</div>
+          )}
         </div>
       </div>
 

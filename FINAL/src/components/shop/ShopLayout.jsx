@@ -7,6 +7,7 @@ import { CartProvider, useCart } from "../../context/CartContext";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Minus, Plus } from "lucide-react";
 import { useLenis } from "../../hooks/useLenis";
+import { FloatingWidgets } from "./FloatingWidgets";
 
 
 function CartDrawer() {
@@ -243,6 +244,7 @@ export function ShopLayout() {
         <Outlet />
       </main>
       <Footer />
+      <FloatingWidgets />
       <CartDrawer />
     </CartProvider>
   );
