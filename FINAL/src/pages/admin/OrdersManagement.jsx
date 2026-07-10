@@ -220,8 +220,37 @@ export function OrdersManagement() {
                       </h3>
                       <div className="flex justify-between items-center py-2 border-b border-gray-100 text-sm">
                         <span className="text-gray-500 uppercase tracking-widest font-bold text-[10px]">Method</span>
-                        <span className="uppercase">{selectedOrder.payment_method === "bank_transfer" ? "Bank Transfer" : (selectedOrder.payment_method || "Card")}</span>
+                        <span className="uppercase font-bold text-brand-obsidian">{selectedOrder.payment_method === "bank_transfer" ? "Bank Transfer" : (selectedOrder.payment_method || "Card")}</span>
                       </div>
+                      
+                      {selectedOrder.payment_method === "bank_transfer" && selectedOrder.payment_details && (
+                        <>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100 text-sm">
+                            <span className="text-gray-500 uppercase tracking-widest font-bold text-[10px]">Account Title</span>
+                            <span className="font-medium text-brand-obsidian">{selectedOrder.payment_details.accountTitle || "N/A"}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100 text-sm">
+                            <span className="text-gray-500 uppercase tracking-widest font-bold text-[10px]">TID</span>
+                            <span className="font-mono text-brand-obsidian">{selectedOrder.payment_details.tid || "N/A"}</span>
+                          </div>
+                          {selectedOrder.payment_details.screenshot && (
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100 text-sm">
+                              <span className="text-gray-500 uppercase tracking-widest font-bold text-[10px]">Screenshot</span>
+                              <a href={selectedOrder.payment_details.screenshot} target="_blank" rel="noopener noreferrer" 
+                                className="text-brand-obsidian uppercase tracking-widest text-[10px] font-bold underline hover:text-gray-600 transition-colors">
+                                View Image
+                              </a>
+                            </div>
+                          )}
+                        </>
+                      )}
+                      
+                      {selectedOrder.payment_method === "card" && selectedOrder.payment_details?.last4 && (
+                        <div className="flex justify-between items-center py-2 border-b border-gray-100 text-sm">
+                          <span className="text-gray-500 uppercase tracking-widest font-bold text-[10px]">Card Number</span>
+                          <span className="font-mono text-brand-obsidian">**** **** **** {selectedOrder.payment_details.last4}</span>
+                        </div>
+                      )}
                     </div>
                   </>
                 )}
