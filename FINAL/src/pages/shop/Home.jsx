@@ -7,35 +7,35 @@ import { ShieldCheck, Truck, HeadphonesIcon, Award, Users, ChevronRight } from "
 const CATEGORIES = [
   { 
     name: "Handheld Testers", 
-    image: "https://hannainst.com/media/catalog/product/h/i/hi98107_1_2.jpg",
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop",
     desc: "Test like a pro on the go. Pocket-sized. Lightweight. Convenient. Start collecting consistent readings anywhere."
   },
   { 
     name: "Portable Meters", 
-    image: "https://hannainst.com/media/catalog/product/h/i/hi98190_1_2.jpg",
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop",
     desc: "Built for the lab or field. Durable. Reliable. Easy to use. Verify on the spot and test multiple parameters at once."
   },
   { 
     name: "Benchtop Meters", 
-    image: "https://hannainst.com/media/catalog/product/h/i/hi5221_1_2.jpg",
+    image: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=800&auto=format&fit=crop",
     desc: "Suited for many applications. Advanced. Versatile. Accurate. Surpass quality standards with our dependable Benchtop Meters."
   },
   { 
     name: "Automatic Titrators", 
-    image: "https://hannainst.com/media/catalog/product/h/i/hi931_4_3.jpg",
+    image: "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=800&auto=format&fit=crop",
     desc: "Get peace of mind and full support. Precise. Accurate. High-Performing. Attain exact, repeatable measurements."
   }
 ];
 
 const BRANDS = [
-  { name: "HANNA instruments", img: "https://hannainst.com/media/wysiwyg/home/logo-hanna.png" },
-  { name: "WILLE55", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/120px-React-icon.svg.png" },
-  { name: "GroLine", img: "https://hannainst.com/media/wysiwyg/home/logo-groline.png" },
-  { name: "Marine Line", img: "https://hannainst.com/media/wysiwyg/home/logo-marine.png" },
-  { name: "Pool Line", img: "https://hannainst.com/media/wysiwyg/home/logo-pool.png" },
-  { name: "HALO 2", img: "https://hannainst.com/media/wysiwyg/home/logo-halo2.png" },
-  { name: "edge", img: "https://hannainst.com/media/wysiwyg/home/logo-edge.png" },
-  { name: "Checker HC", img: "https://hannainst.com/media/wysiwyg/home/logo-checker.png" }
+  { name: "HANNA instruments", img: "" },
+  { name: "WILLE55", img: "" },
+  { name: "GroLine", img: "" },
+  { name: "Marine Line", img: "" },
+  { name: "Pool Line", img: "" },
+  { name: "HALO 2", img: "" },
+  { name: "edge", img: "" },
+  { name: "Checker HC", img: "" }
 ];
 
 const INDUSTRIES = [
@@ -73,7 +73,7 @@ export function Home() {
         </div>
         <div className="w-full md:w-1/2 relative min-h-[400px] md:min-h-[600px] bg-gradient-to-br from-[#082952] to-[#04152b] flex items-center justify-center p-8">
             <img 
-              src="https://hannainst.com/media/catalog/product/h/i/hi2020_1__1.jpg" 
+              src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=800&auto=format&fit=crop" 
               alt="edge pH Meter" 
               className="max-w-full h-auto drop-shadow-2xl object-contain mix-blend-screen opacity-90 hover:scale-105 transition-transform duration-700"
             />
