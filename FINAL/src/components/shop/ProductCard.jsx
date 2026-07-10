@@ -75,6 +75,7 @@ export function ProductCard({ product }) {
       price: product.price,
       color,
       size,
+      thumbnail_url: primaryImage || null,
       quantity: 1,
     });
   };
