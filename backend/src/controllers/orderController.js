@@ -138,14 +138,15 @@ const createOrder = async (req, res) => {
         // Create order
         const orderResult = await client.query(
             `INSERT INTO Online_Orders
-             (customer_id, customer_email, customer_phone, shipping_address, payment_method, payment_details, subtotal, shipping, discount, total_amount, status, order_code)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *;`,
+             (customer_id, customer_email, customer_phone, shipping_address, payment_method, payment_details, subtotal, shipping, discount, total_amount, status, order_code, tracking_no)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *;`,
             [
                 customer_id, customer_email, customer_phone, shipping_address,
                 payment_method, payment_details || {},
                 subtotal || 0, shipping || 0, discount || 0, total_amount,
                 payment_method === 'bank_transfer' ? 'pending_verification' : 'confirmed',
-                order_code
+                order_code,
+                order_code // Auto-set tracking_no to the same order_code
             ]
         );
         const newOrder = orderResult.rows[0];
