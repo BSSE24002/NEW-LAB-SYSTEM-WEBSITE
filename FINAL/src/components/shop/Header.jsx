@@ -48,6 +48,7 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [desktopSearchQuery, setDesktopSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const [products, setProducts] = useState([]);
@@ -100,6 +101,14 @@ export function Header() {
     }
   };
 
+  const handleDesktopSearchSubmit = (e) => {
+    e.preventDefault();
+    if (desktopSearchQuery.trim()) {
+      navigate(`/catalog?search=${encodeURIComponent(desktopSearchQuery.trim())}`);
+      setDesktopSearchQuery("");
+    }
+  };
+
   const liveSearchResults = searchQuery.trim().length > 1
     ? products.filter(p => 
         p.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -143,12 +152,18 @@ export function Header() {
           {/* Right section: Actions */}
           <div className="flex-1 flex items-center justify-end gap-6">
             {/* Search Bar - Hidden on small screens */}
-            <div className="hidden lg:flex items-center relative w-64 border border-gray-300 rounded-sm">
-              <input type="text" placeholder="Search the store" className="w-full py-2 px-3 text-sm focus:outline-none focus:border-blue-600" />
-              <button className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600">
+            <form onSubmit={handleDesktopSearchSubmit} className="hidden lg:flex items-center relative w-64 border border-gray-300 rounded-sm">
+              <input 
+                type="text" 
+                placeholder="Search the store" 
+                value={desktopSearchQuery}
+                onChange={(e) => setDesktopSearchQuery(e.target.value)}
+                className="w-full py-2 px-3 text-sm focus:outline-none focus:border-blue-600" 
+              />
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600">
                 <Search className="w-4 h-4" />
               </button>
-            </div>
+            </form>
             
             <button
               className="p-2 hover:text-blue-600 transition-colors lg:hidden"
@@ -156,8 +171,6 @@ export function Header() {
             >
               <Search className="w-5 h-5" />
             </button>
-
-            <button className="text-xs font-bold uppercase tracking-widest hover:text-blue-600 hidden md:block">SDS</button>
 
             <button
               className="p-2 hover:text-blue-600 transition-colors"
@@ -270,7 +283,7 @@ export function Header() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "-100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 bg-brand-pure-white z-[110] flex flex-col"
+            className="fixed inset-0 bg-brand-pure-white z-[130] flex flex-col"
           >
             <div className="h-20 px-6 flex items-center justify-between border-b border-gray-100 shrink-0">
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-black tracking-tighter">

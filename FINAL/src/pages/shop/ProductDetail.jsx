@@ -22,6 +22,7 @@ export function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [hoveredSize, setHoveredSize] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
+  const [suggestedProducts, setSuggestedProducts] = useState([]);
 
   const containerRef = useRef(null);
 
@@ -45,12 +46,31 @@ export function ProductDetail() {
         ScrollTrigger.refresh();
       });
 
+    api.getProducts().then((allProducts) => {
+      // Just take 4 random products as suggestions for now
+      const shuffled = allProducts.sort(() => 0.5 - Math.random());
+      setSuggestedProducts(shuffled.slice(0, 4));
+    }).catch(() => {});
+
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, [id]);
 
   // ── Derived data once product is loaded ─────────────────────────────────
+
+  useEffect(() => {
+    if (product) {
+      document.title = `${product.name} | NEW LAB SYSTEM`;
+      let metaDescription = document.querySelector('meta[name="description"]');
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta');
+        metaDescription.name = "description";
+        document.head.appendChild(metaDescription);
+      }
+      metaDescription.content = `Buy ${product.name} online at NEW LAB SYSTEM. ${product.category_name ? `Explore our ${product.category_name} collection.` : ''}`;
+    }
+  }, [product]);
 
   // Build image array: thumbnail first, then gallery items
   const imageArray = (() => {
@@ -371,6 +391,25 @@ export function ProductDetail() {
           </div>
         </div>
       </div>
+
+      {/* Suggested Products Section */}
+      {suggestedProducts.length > 0 && (
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-24 mb-24">
+          <h2 className="text-2xl font-serif font-bold text-brand-obsidian mb-8">You May Also Like</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {suggestedProducts.map(suggestion => (
+              <div key={suggestion.id} className="group cursor-pointer" onClick={() => navigate(`/product/${suggestion.id}`)}>
+                <div className="aspect-square bg-brand-alabaster rounded-xl overflow-hidden mb-4 p-4 flex items-center justify-center">
+                  <img src={suggestion.thumbnail_url} alt={suggestion.name} className="max-w-full max-h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
+                </div>
+                <div className="text-[10px] text-gray-400 font-mono mb-1">{suggestion.sku}</div>
+                <h3 className="text-sm font-semibold text-brand-obsidian line-clamp-2 mb-2 group-hover:text-blue-600 transition-colors">{suggestion.name}</h3>
+                <p className="text-sm font-bold text-brand-obsidian">PKR {Number(suggestion.price).toLocaleString()}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

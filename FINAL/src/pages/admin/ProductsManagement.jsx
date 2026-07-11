@@ -329,7 +329,7 @@ export function ProductsManagement() {
           </div>
         </div>
       ) : (
-        <div className="flex-1 bg-white border border-gray-100 overflow-hidden flex flex-col">
+        <div className="flex-1 bg-white border border-gray-100 overflow-auto flex flex-col">
           <table className="w-full text-left border-collapse">
             <thead className="bg-[#FAFAFA] border-b border-gray-100 sticky top-0 z-10 text-[10px] font-bold tracking-widest uppercase text-gray-500">
               <tr>
@@ -392,3 +392,4 @@ export function ProductsManagement() {
     </div>
   );
 }
+

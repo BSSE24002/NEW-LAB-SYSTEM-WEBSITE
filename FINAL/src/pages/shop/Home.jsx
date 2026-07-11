@@ -272,7 +272,35 @@ export function Home() {
         </div>
       </div>
 
-      {/* 6. Value Propositions (Footer Banner) */}
+      {/* 6. Customer Testimonials */}
+      <div className="bg-[#0A2540] text-white py-16 mt-16">
+        <div className="max-w-[1400px] mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 font-serif">What Our Clients Say</h2>
+            <p className="text-blue-200 max-w-2xl mx-auto">Trusted by leading laboratories, research facilities, and educational institutions nationwide.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { text: "The automated titration system we purchased has cut our analysis time in half. Excellent support and seamless installation.", author: "Dr. Ahmed", role: "Head of QA, Pharmaco" },
+              { text: "Best prices for authentic Hanna instruments. The delivery was fast and the equipment was perfectly calibrated out of the box.", author: "Sarah M.", role: "Research Associate" },
+              { text: "New Lab System is our go-to vendor for all lab consumables and precision meters. Their technical support is unmatched.", author: "Prof. Khan", role: "University of Science" }
+            ].map((testimonial, idx) => (
+              <div key={idx} className="bg-white/10 p-8 rounded-xl border border-white/20 hover:bg-white/15 transition-colors">
+                <div className="flex text-yellow-400 mb-4">
+                  {[...Array(5)].map((_, i) => <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-gray-200 mb-6 italic">"{testimonial.text}"</p>
+                <div>
+                  <h4 className="font-bold">{testimonial.author}</h4>
+                  <p className="text-xs text-blue-300">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* 7. Value Propositions (Footer Banner) */}
       <div className="max-w-[1400px] mx-auto px-4 mt-12 mb-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[

@@ -97,7 +97,7 @@ export function CategoriesManagement() {
         </div>
       ) : null}
 
-      <div className="flex-1 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
+      <div className="flex-1 bg-white border border-gray-200 rounded-xl overflow-auto shadow-sm flex flex-col">
         <table className="w-full text-left border-collapse">
           <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-10 text-xs tracking-wider uppercase text-gray-500">
             <tr>
@@ -128,3 +128,4 @@ export function CategoriesManagement() {
     </div>
   );
 }
+

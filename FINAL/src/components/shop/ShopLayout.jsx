@@ -38,7 +38,7 @@ function CartDrawer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-brand-obsidian z-[60]"
+            className="fixed inset-0 bg-brand-obsidian z-[130]"
             onClick={() => {
               setIsCartOpen(false);
               setCheckoutStep(0);
@@ -49,7 +49,7 @@ function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 bottom-0 w-full sm:w-[450px] bg-brand-pure-white z-[70] flex flex-col shadow-2xl overflow-hidden"
+            className="fixed top-0 right-0 bottom-0 w-full sm:w-[450px] bg-brand-pure-white z-[140] flex flex-col shadow-2xl overflow-hidden"
           >
             <div className="p-8 border-b border-brand-soft-grey/30 flex justify-between items-center">
               <h2 className="text-sm font-semibold tracking-[0.2em] uppercase font-sans">
